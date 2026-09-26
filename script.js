@@ -1,11 +1,11 @@
 /* =========================================================
    LIFE IS DANGEROUS, BUT USE IT MORE.
-   SCRIPT PRINCIPAL
+   SCRIPT PRINCIPAL — VERSÃO CORRIGIDA
 ========================================================= */
 
 
 /* =========================================================
-   CONFIGURAÇÕES DO JOGO
+   CONFIGURAÇÃO
 ========================================================= */
 
 const CONFIG = {
@@ -16,44 +16,24 @@ const CONFIG = {
     },
 
     jogador: {
-        velocidade: 3.2,
-        largura: 42,
-        altura: 42
+        velocidade: 4,
+        raio: 24
     },
 
     camera: {
-        suavidade: 0.12
+        suavidade: 0.15
     },
 
     tempo: {
-        horaInicial: 8,
-        minutoInicial: 0,
-
-        // 1 minuto do jogo = 1 segundo real
-        minutosPorSegundo: 1
-    },
-
-    sprite: {
-        colunas: 4,
-        linhas: 4,
-        frames: 4,
-
-        // Linhas do sprite:
-        // 0 = frente
-        // 1 = esquerda
-        // 2 = direita
-        // 3 = costas
-        frente: 0,
-        esquerda: 1,
-        direita: 2,
-        costas: 3
+        horas: 8,
+        minutos: 0
     }
 
 };
 
 
 /* =========================================================
-   ELEMENTOS DO HTML
+   ELEMENTOS
 ========================================================= */
 
 const telaInicial =
@@ -68,14 +48,17 @@ const telaJogo =
 const botaoComecar =
     document.getElementById("btn-comecar");
 
-const listaPersonagens =
-    document.getElementById("lista-personagens");
-
 const mensagemPersonagem =
     document.getElementById("mensagem-personagem");
 
+const personagemBotoes =
+    document.querySelectorAll(".personagem");
+
 const mundo =
     document.getElementById("mundo");
+
+const areaMundo =
+    document.getElementById("area-mundo");
 
 const personagemJogador =
     document.getElementById("personagem-jogador");
@@ -85,9 +68,6 @@ const eloy =
 
 const imagemEloy =
     eloy.querySelector("img");
-
-const areaMundo =
-    document.getElementById("area-mundo");
 
 const analogo =
     document.getElementById("analogo");
@@ -106,21 +86,17 @@ const nomeLocal =
 
 
 /* =========================================================
-   ESTADO DO JOGO
+   ESTADO
 ========================================================= */
 
 const estado = {
 
-    jogoIniciado: false,
-
-    personagemSelecionado: null,
+    iniciado: false,
 
     jogador: {
-        x: 1500,
-        y: 900,
 
-        velocidadeX: 0,
-        velocidadeY: 0,
+        x: 820,
+        y: 610,
 
         direcao: "frente",
 
@@ -128,149 +104,135 @@ const estado = {
 
         frame: 0,
 
-        contadorAnimacao: 0
+        animacao: 0
+
     },
 
     camera: {
+
         x: 0,
         y: 0
+
     },
 
     joystick: {
+
         ativo: false,
 
         x: 0,
-        y: 0
+        y: 0,
+
+        pointerId: null
+
     },
 
     teclado: {
+
         cima: false,
         baixo: false,
         esquerda: false,
         direita: false
+
     },
 
     tempo: {
-        horas: CONFIG.tempo.horaInicial,
-        minutos: CONFIG.tempo.minutoInicial,
+
+        horas: 8,
+        minutos: 0,
 
         acumulado: 0
+
     },
 
-    ultimoFrame: performance.now(),
-
-    colisoes: [],
-
-    regioes: []
+    ultimaAtualizacao:
+        performance.now()
 
 };
 
 
 /* =========================================================
-   UTILITÁRIOS
+   TROCA DE TELA
 ========================================================= */
-
-function limitar(valor, minimo, maximo) {
-
-    return Math.max(
-        minimo,
-        Math.min(valor, maximo)
-    );
-
-}
-
-
-function distancia(x1, y1, x2, y2) {
-
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-
-    return Math.sqrt(
-        dx * dx + dy * dy
-    );
-
-}
-
 
 function mostrarTela(tela) {
 
     document
         .querySelectorAll(".tela")
-        .forEach(elemento => {
-            elemento.classList.remove("ativa");
+        .forEach(item => {
+
+            item.classList.remove("ativa");
+
         });
+
 
     tela.classList.add("ativa");
 
 }
 
 
-function formatarHora(hora, minuto) {
-
-    const h =
-        String(hora).padStart(2, "0");
-
-    const m =
-        String(minuto).padStart(2, "0");
-
-    return `${h}:${m}`;
-
-}
 /* =========================================================
-   TELA INICIAL
+   BOTÃO COMEÇAR
 ========================================================= */
 
-botaoComecar.addEventListener("click", () => {
+botaoComecar.addEventListener(
+    "click",
+    () => {
 
-    mostrarTela(telaPersonagens);
+        mostrarTela(
+            telaPersonagens
+        );
 
-});
+    }
+);
 
 
 /* =========================================================
    SELEÇÃO DE PERSONAGEM
 ========================================================= */
 
-const personagens =
-    document.querySelectorAll(".personagem");
+personagemBotoes.forEach(botao => {
+
+    botao.addEventListener(
+        "click",
+        () => {
+
+            const personagem =
+                botao.dataset.personagem;
 
 
-personagens.forEach(botao => {
+            if (
+                botao.classList.contains("bloqueado")
+            ) {
 
-    botao.addEventListener("click", () => {
+                mensagemPersonagem.textContent =
+                    `${personagem} ainda está bloqueado.`;
 
-        const nome =
-            botao.dataset.personagem;
+                mensagemPersonagem.classList.add(
+                    "mostrar"
+                );
 
-        if (
-            botao.classList.contains("bloqueado")
-        ) {
 
-            mensagemPersonagem.textContent =
-                `${nome} ainda não está disponível.`;
+                setTimeout(() => {
 
-            mensagemPersonagem.classList.add("mostrar");
+                    mensagemPersonagem.classList.remove(
+                        "mostrar"
+                    );
 
-            setTimeout(() => {
+                }, 1500);
 
-                mensagemPersonagem.classList.remove("mostrar");
+                return;
 
-            }, 1800);
+            }
 
-            return;
+
+            if (personagem === "Eloy") {
+
+                iniciarJogo();
+
+            }
+
         }
-
-
-        if (nome === "Eloy") {
-
-            estado.personagemSelecionado =
-                "Eloy";
-
-            iniciarJogo();
-
-        }
-
-    });
+    );
 
 });
 
@@ -281,210 +243,199 @@ personagens.forEach(botao => {
 
 function iniciarJogo() {
 
-    estado.jogoIniciado = true;
-
-    mostrarTela(telaJogo);
-
-    prepararSpriteEloy();
-
-    prepararColisoes();
-
-    prepararRegioes();
-
-    posicionarJogador();
-
-    atualizarRelogio();
-
-    atualizarCamera(true);
-
-    iniciarLoop();
-
-}
+    estado.iniciado = true;
 
 
-/* =========================================================
-   SPRITE DO ELOY
-========================================================= */
-
-function prepararSpriteEloy() {
-
-    if (!imagemEloy) {
-        return;
-    }
-
-
-    imagemEloy.style.display = "none";
-
-
-    imagemEloy.addEventListener(
-        "load",
-        criarCanvasSprite,
-        { once: true }
+    mostrarTela(
+        telaJogo
     );
 
-
-    if (imagemEloy.complete) {
-
-        criarCanvasSprite();
-
-    }
-
-}
-
-
-/* =========================================================
-   CANVAS DO SPRITE
-========================================================= */
-
-let canvasEloy = null;
-let contextoEloy = null;
-
-let larguraFrame = 0;
-let alturaFrame = 0;
-
-
-function criarCanvasSprite() {
-
-    if (!imagemEloy.naturalWidth) {
-        return;
-    }
-
-
-    if (canvasEloy) {
-        return;
-    }
-
-
-    larguraFrame =
-        imagemEloy.naturalWidth /
-        CONFIG.sprite.colunas;
-
-
-    alturaFrame =
-        imagemEloy.naturalHeight /
-        CONFIG.sprite.linhas;
-
-
-    canvasEloy =
-        document.createElement("canvas");
-
-
-    canvasEloy.width =
-        larguraFrame;
-
-    canvasEloy.height =
-        alturaFrame;
-
-
-    contextoEloy =
-        canvasEloy.getContext("2d");
-
-
-    canvasEloy.style.width = "100%";
-    canvasEloy.style.height = "100%";
-
-    canvasEloy.style.imageRendering =
-        "pixelated";
-
-    canvasEloy.draggable = false;
-
-
-    eloy.appendChild(canvasEloy);
-
-
-    desenharSprite();
-
-}
-
-
-/* =========================================================
-   DESENHAR FRAME
-========================================================= */
-
-function desenharSprite() {
-
-    if (
-        !canvasEloy ||
-        !contextoEloy ||
-        !imagemEloy.naturalWidth
-    ) {
-        return;
-    }
-
-
-    let linha =
-        CONFIG.sprite.frente;
-
-
-    if (estado.jogador.direcao === "esquerda") {
-
-        linha =
-            CONFIG.sprite.esquerda;
-
-    }
-
-    else if (
-        estado.jogador.direcao === "direita"
-    ) {
-
-        linha =
-            CONFIG.sprite.direita;
-
-    }
-
-    else if (
-        estado.jogador.direcao === "costas"
-    ) {
-
-        linha =
-            CONFIG.sprite.costas;
-
-    }
-
-
-    contextoEloy.clearRect(
-        0,
-        0,
-        canvasEloy.width,
-        canvasEloy.height
-    );
-
-
-    contextoEloy.drawImage(
-
-        imagemEloy,
-
-        estado.jogador.frame *
-            larguraFrame,
-
-        linha *
-            alturaFrame,
-
-        larguraFrame,
-        alturaFrame,
-
-        0,
-        0,
-
-        canvasEloy.width,
-        canvasEloy.height
-
-    );
-
-}
-
-
-/* =========================================================
-   POSIÇÃO INICIAL
-========================================================= */
-
-function posicionarJogador() {
-
-    // Praça central
 
     estado.jogador.x = 820;
     estado.jogador.y = 610;
 
+
+    estado.camera.x = 0;
+    estado.camera.y = 0;
+
+
+    prepararEloy();
+
+
+    atualizarPosicaoJogador();
+
+
+    atualizarCamera(true);
+
+
+    atualizarRelogio();
+
+
+    requestAnimationFrame(
+        loop
+    );
+
+}
+
+
+/* =========================================================
+   ELOY
+========================================================= */
+
+function prepararEloy() {
+
+    /*
+       Escondemos a imagem original porque ela é
+       a folha de sprites.
+    */
+
+    imagemEloy.style.display = "none";
+
+
+    /*
+       Criamos uma imagem própria para mostrar
+       somente um personagem.
+
+       A folha original fica como background.
+    */
+
+    let sprite =
+        document.getElementById(
+            "sprite-renderizado"
+        );
+
+
+    if (!sprite) {
+
+        sprite =
+            document.createElement("div");
+
+        sprite.id =
+            "sprite-renderizado";
+
+        eloy.appendChild(sprite);
+
+    }
+
+
+    sprite.style.position =
+        "absolute";
+
+    sprite.style.left =
+        "0";
+
+    sprite.style.top =
+        "0";
+
+    sprite.style.width =
+        "100%";
+
+    sprite.style.height =
+        "100%";
+
+    sprite.style.backgroundImage =
+        `url("${imagemEloy.src}")`;
+
+    sprite.style.backgroundRepeat =
+        "no-repeat";
+
+    sprite.style.backgroundPosition =
+        "0% 0%";
+
+    sprite.style.backgroundSize =
+        "400% 400%";
+
+    sprite.style.imageRendering =
+        "pixelated";
+
+    sprite.style.pointerEvents =
+        "none";
+
+
+    atualizarSprite();
+
+}
+
+
+/* =========================================================
+   SPRITE
+========================================================= */
+
+function atualizarSprite() {
+
+    const sprite =
+        document.getElementById(
+            "sprite-renderizado"
+        );
+
+
+    if (!sprite) {
+        return;
+    }
+
+
+    let linha = 0;
+
+
+    if (
+        estado.jogador.direcao ===
+        "frente"
+    ) {
+
+        linha = 0;
+
+    }
+
+    else if (
+        estado.jogador.direcao ===
+        "esquerda"
+    ) {
+
+        linha = 1;
+
+    }
+
+    else if (
+        estado.jogador.direcao ===
+        "direita"
+    ) {
+
+        linha = 2;
+
+    }
+
+    else if (
+        estado.jogador.direcao ===
+        "costas"
+    ) {
+
+        linha = 3;
+
+    }
+
+
+    const coluna =
+        estado.jogador.frame;
+
+
+    const x =
+        coluna * 33.3333;
+
+    const y =
+        linha * 33.3333;
+
+
+    sprite.style.backgroundPosition =
+        `${x}% ${y}%`;
+
+}
+
+
+/* =========================================================
+   POSIÇÃO
+========================================================= */
+
+function atualizarPosicaoJogador() {
 
     personagemJogador.style.left =
         `${estado.jogador.x}px`;
@@ -496,34 +447,15 @@ function posicionarJogador() {
 
 
 /* =========================================================
-   DIREÇÃO DO PERSONAGEM
+   DIREÇÃO
 ========================================================= */
 
 function atualizarDirecao(dx, dy) {
 
     if (
-        Math.abs(dx) < 0.01 &&
-        Math.abs(dy) < 0.01
+        Math.abs(dx) <
+        Math.abs(dy)
     ) {
-        return;
-    }
-
-
-    if (Math.abs(dx) > Math.abs(dy)) {
-
-        if (dx > 0) {
-
-            estado.jogador.direcao =
-                "direita";
-
-        } else {
-
-            estado.jogador.direcao =
-                "esquerda";
-
-        }
-
-    } else {
 
         if (dy > 0) {
 
@@ -539,27 +471,100 @@ function atualizarDirecao(dx, dy) {
 
     }
 
+    else {
+
+        if (dx > 0) {
+
+            estado.jogador.direcao =
+                "direita";
+
+        } else {
+
+            estado.jogador.direcao =
+                "esquerda";
+
+        }
+
+    }
+
+
+    atualizarSprite();
+
 }
+
+
 /* =========================================================
-   COLISÕES
+   COLISÃO
 ========================================================= */
 
-function prepararColisoes() {
+function obterRetanguloMundo(elemento) {
 
-    estado.colisoes = [];
+    const retangulo =
+        elemento.getBoundingClientRect();
 
+
+    const mundoRetangulo =
+        mundo.getBoundingClientRect();
+
+
+    /*
+       Converte a posição visual do elemento
+       para coordenadas internas do mundo.
+
+       Isso corrige o problema das regiões
+       aninhadas.
+    */
+
+    const escalaX =
+        mundo.offsetWidth /
+        mundoRetangulo.width;
+
+    const escalaY =
+        mundo.offsetHeight /
+        mundoRetangulo.height;
+
+
+    return {
+
+        left:
+            (retangulo.left -
+            mundoRetangulo.left)
+            * escalaX,
+
+        top:
+            (retangulo.top -
+            mundoRetangulo.top)
+            * escalaY,
+
+        width:
+            retangulo.width *
+            escalaX,
+
+        height:
+            retangulo.height *
+            escalaY
+
+    };
+
+}
+
+
+/* =========================================================
+   OBJETOS BLOQUEADORES
+========================================================= */
+
+function obterColisoes() {
 
     const seletores = [
 
-        ".muralha-norte",
-        ".muralha-sul",
-        ".muralha-oeste",
-        ".muralha-leste",
+        ".muralha",
 
         ".casa",
+
         ".grande",
 
         ".ruina",
+
         ".templo",
 
         ".arvore",
@@ -573,70 +578,71 @@ function prepararColisoes() {
     ];
 
 
+    const lista = [];
+
+
     seletores.forEach(seletor => {
 
         document
             .querySelectorAll(seletor)
             .forEach(elemento => {
 
-                estado.colisoes.push(elemento);
+                lista.push(
+                    obterRetanguloMundo(elemento)
+                );
 
             });
 
     });
 
+
+    return lista;
+
 }
 
 
 /* =========================================================
-   TESTE DE COLISÃO
+   VERIFICAR COLISÃO
 ========================================================= */
 
-function jogadorColide(x, y) {
+function existeColisao(x, y) {
 
-    const raioX =
-        CONFIG.jogador.largura / 2;
+    const raio =
+        CONFIG.jogador.raio;
 
-    const raioY =
-        CONFIG.jogador.altura / 2;
+
+    const esquerda =
+        x - raio;
+
+    const direita =
+        x + raio;
+
+    const topo =
+        y - raio;
+
+    const baixo =
+        y + raio;
+
+
+    const colisoes =
+        obterColisoes();
 
 
     for (
-        const elemento of estado.colisoes
+        const objeto of colisoes
     ) {
-
-        const left =
-            elemento.offsetLeft;
-
-        const top =
-            elemento.offsetTop;
-
-        const width =
-            elemento.offsetWidth;
-
-        const height =
-            elemento.offsetHeight;
-
-
-        const jogadorEsquerda =
-            x - raioX;
-
-        const jogadorDireita =
-            x + raioX;
-
-        const jogadorTopo =
-            y - raioY;
-
-        const jogadorBaixo =
-            y + raioY;
-
 
         if (
 
-            jogadorDireita > left &&
-            jogadorEsquerda < left + width &&
-            jogadorBaixo > top &&
-            jogadorTopo < top + height
+            direita > objeto.left &&
+            esquerda <
+                objeto.left +
+                objeto.width &&
+
+            baixo > objeto.top &&
+            topo <
+                objeto.top +
+                objeto.height
 
         ) {
 
@@ -653,20 +659,25 @@ function jogadorColide(x, y) {
 
 
 /* =========================================================
-   LIMITES DO MAPA
+   LIMITES
 ========================================================= */
 
 function dentroDoMapa(x, y) {
 
-    const margem = 70;
+    const margem = 75;
 
 
     return (
 
-        x >= margem &&
-        x <= CONFIG.mapa.largura - margem &&
-        y >= margem &&
-        y <= CONFIG.mapa.altura - margem
+        x > margem &&
+        x <
+            CONFIG.mapa.largura -
+            margem &&
+
+        y > margem &&
+        y <
+            CONFIG.mapa.altura -
+            margem
 
     );
 
@@ -679,181 +690,534 @@ function dentroDoMapa(x, y) {
 
 function moverJogador(dx, dy) {
 
-    const comprimento =
-        Math.sqrt(dx * dx + dy * dy);
+    const tamanho =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
 
 
-    if (comprimento > 1) {
+    if (tamanho > 1) {
 
-        dx /= comprimento;
-        dy /= comprimento;
+        dx /= tamanho;
+        dy /= tamanho;
 
     }
 
-
-    const velocidade =
-        CONFIG.jogador.velocidade;
-
-
-    const movimentoX =
-        dx * velocidade;
-
-    const movimentoY =
-        dy * velocidade;
-
-
-    const novoX =
-        estado.jogador.x + movimentoX;
-
-    const novoY =
-        estado.jogador.y + movimentoY;
-
-
-    /*
-       Colisão horizontal.
-    */
 
     if (
-        dentroDoMapa(novoX, estado.jogador.y) &&
-        !jogadorColide(
-            novoX,
-            estado.jogador.y
-        )
+        Math.abs(dx) < 0.01 &&
+        Math.abs(dy) < 0.01
     ) {
 
-        estado.jogador.x = novoX;
-
-    }
-
-
-    /*
-       Colisão vertical.
-    */
-
-    if (
-        dentroDoMapa(estado.jogador.x, novoY) &&
-        !jogadorColide(
-            estado.jogador.x,
-            novoY
-        )
-    ) {
-
-        estado.jogador.y = novoY;
-
-    }
-
-
-    estado.jogador.andando =
-        Math.abs(dx) > 0.01 ||
-        Math.abs(dy) > 0.01;
-
-
-    atualizarDirecao(dx, dy);
-
-}
-
-
-/* =========================================================
-   ANIMAÇÃO
-========================================================= */
-
-function atualizarAnimacao(delta) {
-
-    if (!estado.jogador.andando) {
-
-        estado.jogador.frame = 0;
-
-        desenharSprite();
+        estado.jogador.andando =
+            false;
 
         return;
 
     }
 
 
-    estado.jogador.contadorAnimacao += delta;
+    estado.jogador.andando =
+        true;
+
+
+    atualizarDirecao(
+        dx,
+        dy
+    );
+
+
+    /*
+       Movimento horizontal
+    */
+
+    const novoX =
+        estado.jogador.x +
+        dx *
+        CONFIG.jogador.velocidade;
 
 
     if (
-        estado.jogador.contadorAnimacao >= 120
+
+        dentroDoMapa(
+            novoX,
+            estado.jogador.y
+        )
+
+        &&
+
+        !existeColisao(
+            novoX,
+            estado.jogador.y
+        )
+
     ) {
 
-        estado.jogador.contadorAnimacao = 0;
+        estado.jogador.x =
+            novoX;
+
+    }
 
 
-        estado.jogador.frame++;
+    /*
+       Movimento vertical
+    */
+
+    const novoY =
+        estado.jogador.y +
+        dy *
+        CONFIG.jogador.velocidade;
+
+
+    if (
+
+        dentroDoMapa(
+            estado.jogador.x,
+            novoY
+        )
+
+        &&
+
+        !existeColisao(
+            estado.jogador.x,
+            novoY
+        )
+
+    ) {
+
+        estado.jogador.y =
+            novoY;
+
+    }
+
+
+    atualizarPosicaoJogador();
+
+}
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    evento => {
+
+        const tecla =
+            evento.key.toLowerCase();
+
 
         if (
-            estado.jogador.frame >=
-            CONFIG.sprite.frames
+            tecla === "w" ||
+            tecla === "arrowup"
         ) {
 
-            estado.jogador.frame = 0;
+            estado.teclado.cima = true;
 
         }
 
 
-        desenharSprite();
+        if (
+            tecla === "s" ||
+            tecla === "arrowdown"
+        ) {
+
+            estado.teclado.baixo = true;
+
+        }
+
+
+        if (
+            tecla === "a" ||
+            tecla === "arrowleft"
+        ) {
+
+            estado.teclado.esquerda = true;
+
+        }
+
+
+        if (
+            tecla === "d" ||
+            tecla === "arrowright"
+        ) {
+
+            estado.teclado.direita = true;
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    evento => {
+
+        const tecla =
+            evento.key.toLowerCase();
+
+
+        if (
+            tecla === "w" ||
+            tecla === "arrowup"
+        ) {
+
+            estado.teclado.cima = false;
+
+        }
+
+
+        if (
+            tecla === "s" ||
+            tecla === "arrowdown"
+        ) {
+
+            estado.teclado.baixo = false;
+
+        }
+
+
+        if (
+            tecla === "a" ||
+            tecla === "arrowleft"
+        ) {
+
+            estado.teclado.esquerda = false;
+
+        }
+
+
+        if (
+            tecla === "d" ||
+            tecla === "arrowright"
+        ) {
+
+            estado.teclado.direita = false;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DIREÇÃO DO TECLADO
+========================================================= */
+
+function obterTeclado() {
+
+    let x = 0;
+    let y = 0;
+
+
+    if (estado.teclado.direita) {
+        x++;
+    }
+
+    if (estado.teclado.esquerda) {
+        x--;
+    }
+
+    if (estado.teclado.baixo) {
+        y++;
+    }
+
+    if (estado.teclado.cima) {
+        y--;
+    }
+
+
+    return {
+        x,
+        y
+    };
+
+}
+
+
+/* =========================================================
+   ANALÓGICO
+========================================================= */
+
+function atualizarJoystick(
+    clienteX,
+    clienteY
+) {
+
+    const retangulo =
+        analogo.getBoundingClientRect();
+
+
+    const centroX =
+        retangulo.left +
+        retangulo.width / 2;
+
+    const centroY =
+        retangulo.top +
+        retangulo.height / 2;
+
+
+    let x =
+        clienteX -
+        centroX;
+
+    let y =
+        clienteY -
+        centroY;
+
+
+    const raio =
+        retangulo.width / 2;
+
+
+    const distancia =
+        Math.sqrt(
+            x * x +
+            y * y
+        );
+
+
+    if (
+        distancia > raio
+    ) {
+
+        x =
+            x /
+            distancia *
+            raio;
+
+        y =
+            y /
+            distancia *
+            raio;
 
     }
 
+
+    const limite =
+        raio - 32;
+
+
+    estado.joystick.x =
+        x / limite;
+
+    estado.joystick.y =
+        y / limite;
+
+
+    estado.joystick.x =
+        Math.max(
+            -1,
+            Math.min(
+                1,
+                estado.joystick.x
+            )
+        );
+
+
+    estado.joystick.y =
+        Math.max(
+            -1,
+            Math.min(
+                1,
+                estado.joystick.y
+            )
+        );
+
+
+    analogoCentro.style.transform =
+        `translate(
+            calc(-50% + ${
+                estado.joystick.x *
+                limite
+            }px),
+            calc(-50% + ${
+                estado.joystick.y *
+                limite
+            }px)
+        )`;
+
 }
+
+
+/* =========================================================
+   COMEÇAR ANALÓGICO
+========================================================= */
+
+analogo.addEventListener(
+    "pointerdown",
+    evento => {
+
+        evento.preventDefault();
+
+
+        estado.joystick.ativo =
+            true;
+
+        estado.joystick.pointerId =
+            evento.pointerId;
+
+
+        analogo.setPointerCapture(
+            evento.pointerId
+        );
+
+
+        atualizarJoystick(
+            evento.clientX,
+            evento.clientY
+        );
+
+    }
+);
+
+
+/* =========================================================
+   MOVER ANALÓGICO
+========================================================= */
+
+analogo.addEventListener(
+    "pointermove",
+    evento => {
+
+        if (
+            !estado.joystick.ativo
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            evento.pointerId !==
+            estado.joystick.pointerId
+        ) {
+
+            return;
+
+        }
+
+
+        evento.preventDefault();
+
+
+        atualizarJoystick(
+            evento.clientX,
+            evento.clientY
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SOLTAR ANALÓGICO
+========================================================= */
+
+function soltarAnalogo() {
+
+    estado.joystick.ativo =
+        false;
+
+    estado.joystick.x = 0;
+    estado.joystick.y = 0;
+
+    estado.joystick.pointerId =
+        null;
+
+
+    analogoCentro.style.transform =
+        "translate(-50%, -50%)";
+
+}
+
+
+analogo.addEventListener(
+    "pointerup",
+    soltarAnalogo
+);
+
+analogo.addEventListener(
+    "pointercancel",
+    soltarAnalogo
+);
+
+analogo.addEventListener(
+    "lostpointercapture",
+    soltarAnalogo
+);
 
 
 /* =========================================================
    CÂMERA
 ========================================================= */
 
-function atualizarCamera(forcar = false) {
+function atualizarCamera(
+    instantanea = false
+) {
 
-    const larguraTela =
+    const largura =
         areaMundo.clientWidth;
 
-    const alturaTela =
+    const altura =
         areaMundo.clientHeight;
 
 
     let alvoX =
         estado.jogador.x -
-        larguraTela / 2;
+        largura / 2;
 
 
     let alvoY =
         estado.jogador.y -
-        alturaTela / 2;
+        altura / 2;
 
 
     const limiteX =
         CONFIG.mapa.largura -
-        larguraTela;
+        largura;
 
 
     const limiteY =
         CONFIG.mapa.altura -
-        alturaTela;
+        altura;
 
 
     alvoX =
-        limitar(
-            alvoX,
+        Math.max(
             0,
-            Math.max(0, limiteX)
+            Math.min(
+                limiteX,
+                alvoX
+            )
         );
 
 
     alvoY =
-        limitar(
-            alvoY,
+        Math.max(
             0,
-            Math.max(0, limiteY)
+            Math.min(
+                limiteY,
+                alvoY
+            )
         );
 
 
-    if (forcar) {
+    if (instantanea) {
 
-        estado.camera.x = alvoX;
-        estado.camera.y = alvoY;
+        estado.camera.x =
+            alvoX;
 
-    } else {
+        estado.camera.y =
+            alvoY;
+
+    }
+
+    else {
 
         estado.camera.x +=
             (
@@ -874,370 +1238,16 @@ function atualizarCamera(forcar = false) {
 
 
     mundo.style.transform =
-        `translate(${-estado.camera.x}px, ${-estado.camera.y}px)`;
-
-}
-
-
-/* =========================================================
-   TECLADO
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    evento => {
-
-        switch (evento.key.toLowerCase()) {
-
-            case "w":
-            case "arrowup":
-                estado.teclado.cima = true;
-                break;
-
-            case "s":
-            case "arrowdown":
-                estado.teclado.baixo = true;
-                break;
-
-            case "a":
-            case "arrowleft":
-                estado.teclado.esquerda = true;
-                break;
-
-            case "d":
-            case "arrowright":
-                estado.teclado.direita = true;
-                break;
-
-        }
-
-    }
-);
-
-
-document.addEventListener(
-    "keyup",
-    evento => {
-
-        switch (evento.key.toLowerCase()) {
-
-            case "w":
-            case "arrowup":
-                estado.teclado.cima = false;
-                break;
-
-            case "s":
-            case "arrowdown":
-                estado.teclado.baixo = false;
-                break;
-
-            case "a":
-            case "arrowleft":
-                estado.teclado.esquerda = false;
-                break;
-
-            case "d":
-            case "arrowright":
-                estado.teclado.direita = false;
-                break;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   PEGAR DIREÇÃO DO TECLADO
-========================================================= */
-
-function obterDirecaoTeclado() {
-
-    let x = 0;
-    let y = 0;
-
-
-    if (estado.teclado.direita) {
-        x += 1;
-    }
-
-    if (estado.teclado.esquerda) {
-        x -= 1;
-    }
-
-    if (estado.teclado.baixo) {
-        y += 1;
-    }
-
-    if (estado.teclado.cima) {
-        y -= 1;
-    }
-
-
-    return {
-        x,
-        y
-    };
-
-        }
-/* =========================================================
-   ANALÓGICO
-========================================================= */
-
-let ponteiroAnalogico = null;
-
-
-function calcularJoystick(
-    clienteX,
-    clienteY
-) {
-
-    const rect =
-        analogo.getBoundingClientRect();
-
-
-    const centroX =
-        rect.left + rect.width / 2;
-
-    const centroY =
-        rect.top + rect.height / 2;
-
-
-    let x =
-        clienteX - centroX;
-
-    let y =
-        clienteY - centroY;
-
-
-    const raio =
-        rect.width / 2;
-
-
-    const distanciaAtual =
-        Math.sqrt(
-            x * x +
-            y * y
-        );
-
-
-    if (distanciaAtual > raio) {
-
-        x =
-            x / distanciaAtual *
-            raio;
-
-        y =
-            y / distanciaAtual *
-            raio;
-
-    }
-
-
-    const limiteInterno =
-        raio - 32;
-
-
-    const distanciaNormalizada =
-        Math.min(
-            1,
-            distanciaAtual /
-            limiteInterno
-        );
-
-
-    if (distanciaAtual > 0) {
-
-        x =
-            x / distanciaAtual *
-            distanciaNormalizada;
-
-        y =
-            y / distanciaAtual *
-            distanciaNormalizada;
-
-    } else {
-
-        x = 0;
-        y = 0;
-
-    }
-
-
-    estado.joystick.x = x;
-    estado.joystick.y = y;
-
-
-    analogoCentro.style.transform =
         `translate(
-            calc(-50% + ${x * limiteInterno}px),
-            calc(-50% + ${y * limiteInterno}px)
+            ${-estado.camera.x}px,
+            ${-estado.camera.y}px
         )`;
 
 }
 
 
-function iniciarJoystick(evento) {
-
-    evento.preventDefault();
-
-    estado.joystick.ativo = true;
-
-    ponteiroAnalogico =
-        evento.pointerId;
-
-    analogo.setPointerCapture(
-        evento.pointerId
-    );
-
-
-    calcularJoystick(
-        evento.clientX,
-        evento.clientY
-    );
-
-}
-
-
-function moverJoystick(evento) {
-
-    if (
-        !estado.joystick.ativo ||
-        evento.pointerId !== ponteiroAnalogico
-    ) {
-        return;
-    }
-
-
-    evento.preventDefault();
-
-
-    calcularJoystick(
-        evento.clientX,
-        evento.clientY
-    );
-
-}
-
-
-function pararJoystick(evento) {
-
-    if (
-        evento.pointerId !== ponteiroAnalogico
-    ) {
-        return;
-    }
-
-
-    estado.joystick.ativo = false;
-
-    ponteiroAnalogico = null;
-
-
-    estado.joystick.x = 0;
-    estado.joystick.y = 0;
-
-
-    analogoCentro.style.transform =
-        "translate(-50%, -50%)";
-
-
-    try {
-
-        analogo.releasePointerCapture(
-            evento.pointerId
-        );
-
-    } catch (erro) {
-
-        // Nada precisa ser feito.
-
-    }
-
-}
-
-
-analogo.addEventListener(
-    "pointerdown",
-    iniciarJoystick
-);
-
-analogo.addEventListener(
-    "pointermove",
-    moverJoystick
-);
-
-analogo.addEventListener(
-    "pointerup",
-    pararJoystick
-);
-
-analogo.addEventListener(
-    "pointercancel",
-    pararJoystick
-);
-
-
 /* =========================================================
-   REGIÕES DO MAPA
-========================================================= */
-
-function prepararRegioes() {
-
-    estado.regioes = [
-
-        {
-            nome: "DISTRITO CENTRAL",
-
-            x: 300,
-            y: 220,
-            largura: 1200,
-            altura: 730
-        },
-
-        {
-            nome: "DISTRITO ABANDONADO",
-
-            x: 230,
-            y: 1250,
-            largura: 1050,
-            altura: 700
-        },
-
-        {
-            nome: "ZONA DE RUPTURA",
-
-            x: 1300,
-            y: 1320,
-            largura: 650,
-            altura: 620
-        },
-
-        {
-            nome: "ZONA RITUALÍSTICA",
-
-            x: 2050,
-            y: 250,
-            largura: 750,
-            altura: 620
-        },
-
-        {
-            nome: "FLORESTA EXTERIOR",
-
-            x: 2050,
-            y: 1050,
-            largura: 950,
-            altura: 850
-        }
-
-    ];
-
-}
-
-
-/* =========================================================
-   ATUALIZAR NOME DA REGIÃO
+   REGIÃO
 ========================================================= */
 
 function atualizarRegiao() {
@@ -1249,76 +1259,164 @@ function atualizarRegiao() {
         estado.jogador.y;
 
 
-    let regiaoAtual =
+    let nome =
         "ARREDORES";
 
 
-    for (
-        const regiao of estado.regioes
+    if (
+        x >= 300 &&
+        x <= 1500 &&
+        y >= 220 &&
+        y <= 950
     ) {
 
-        if (
+        nome =
+            "DISTRITO CENTRAL";
 
-            x >= regiao.x &&
-            x <= regiao.x + regiao.largura &&
+    }
 
-            y >= regiao.y &&
-            y <= regiao.y + regiao.altura
+    else if (
+        x >= 230 &&
+        x <= 1280 &&
+        y >= 1250 &&
+        y <= 1950
+    ) {
 
-        ) {
+        nome =
+            "DISTRITO ABANDONADO";
 
-            regiaoAtual =
-                regiao.nome;
+    }
 
-            break;
+    else if (
+        x >= 1300 &&
+        x <= 1950 &&
+        y >= 1320 &&
+        y <= 1940
+    ) {
 
-        }
+        nome =
+            "ZONA DE RUPTURA";
+
+    }
+
+    else if (
+        x >= 2050 &&
+        x <= 2800 &&
+        y >= 250 &&
+        y <= 870
+    ) {
+
+        nome =
+            "ZONA RITUALÍSTICA";
+
+    }
+
+    else if (
+        x >= 2050 &&
+        x <= 3000 &&
+        y >= 1050 &&
+        y <= 1900
+    ) {
+
+        nome =
+            "FLORESTA EXTERIOR";
 
     }
 
 
     nomeLocal.textContent =
-        regiaoAtual;
+        nome;
 
 }
 
 
 /* =========================================================
    RELÓGIO
+======================================================== */
+
+function atualizarRelogio() {
+
+    horaElemento.textContent =
+        String(
+            estado.tempo.horas
+        ).padStart(2, "0")
+        +
+        ":"
+        +
+        String(
+            estado.tempo.minutos
+        ).padStart(2, "0");
+
+
+    if (
+        estado.tempo.horas >= 18 ||
+        estado.tempo.horas < 8
+    ) {
+
+        periodoElemento.textContent =
+            "☾ NOITE";
+
+        document.body.classList.add(
+            "noite"
+        );
+
+    }
+
+    else {
+
+        periodoElemento.textContent =
+            "☀ DIA";
+
+        document.body.classList.remove(
+            "noite"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSAGEM DO TEMPO
 ========================================================= */
 
 function atualizarTempo(delta) {
 
     estado.tempo.acumulado +=
-        delta / 1000;
+        delta;
 
+
+    /*
+       1 minuto do jogo =
+       1 segundo real.
+    */
 
     if (
         estado.tempo.acumulado >=
-        1 / CONFIG.tempo.minutosPorSegundo
+        1000
     ) {
 
-        const minutosPassados =
+        const minutos =
             Math.floor(
-                estado.tempo.acumulado *
-                CONFIG.tempo.minutosPorSegundo
+                estado.tempo.acumulado /
+                1000
             );
 
 
         estado.tempo.acumulado -=
-            minutosPassados /
-            CONFIG.tempo.minutosPorSegundo;
+            minutos * 1000;
 
 
         estado.tempo.minutos +=
-            minutosPassados;
+            minutos;
 
 
         while (
             estado.tempo.minutos >= 60
         ) {
 
-            estado.tempo.minutos -= 60;
+            estado.tempo.minutos -=
+                60;
 
             estado.tempo.horas++;
 
@@ -1342,163 +1440,139 @@ function atualizarTempo(delta) {
 
 
 /* =========================================================
-   DIA / NOITE
+   ANIMAÇÃO
 ========================================================= */
 
-function verificarPeriodo() {
+function atualizarAnimacao(delta) {
 
-    const hora =
-        estado.tempo.horas;
+    if (
+        !estado.jogador.andando
+    ) {
+
+        estado.jogador.frame = 0;
+
+        atualizarSprite();
+
+        return;
+
+    }
 
 
-    const noite =
-        hora >= 18 ||
-        hora < 8;
+    estado.jogador.animacao +=
+        delta;
 
 
-    if (noite) {
+    if (
+        estado.jogador.animacao >=
+        130
+    ) {
 
-        document.body.classList.add("noite");
+        estado.jogador.animacao = 0;
 
-        periodoElemento.textContent =
-            "☾ NOITE";
 
-    } else {
+        estado.jogador.frame++;
 
-        document.body.classList.remove("noite");
 
-        periodoElemento.textContent =
-            "☀ DIA";
+        if (
+            estado.jogador.frame >= 4
+        ) {
+
+            estado.jogador.frame = 0;
+
+        }
+
+
+        atualizarSprite();
 
     }
 
 }
 
 
-function atualizarRelogio() {
-
-    horaElemento.textContent =
-        formatarHora(
-            estado.tempo.horas,
-            estado.tempo.minutos
-        );
-
-
-    verificarPeriodo();
-
-}
-
-
 /* =========================================================
-   ATUALIZAÇÃO DO MOVIMENTO
+   LOOP
 ========================================================= */
 
-function atualizarMovimento() {
+function loop(tempoAtual) {
 
-    let dx =
-        estado.joystick.x;
+    if (!estado.iniciado) {
 
-    let dy =
-        estado.joystick.y;
+        requestAnimationFrame(
+            loop
+        );
+
+        return;
+
+    }
 
 
-    const teclado =
-        obterDirecaoTeclado();
+    const delta =
+        tempoAtual -
+        estado.ultimaAtualizacao;
+
+
+    estado.ultimaAtualizacao =
+        tempoAtual;
 
 
     /*
-       Se estiver usando teclado,
-       ele assume o controle.
+       Primeiro teclado.
+    */
+
+    let direcao =
+        obterTeclado();
+
+
+    /*
+       Se não estiver usando teclado,
+       usa o analógico.
     */
 
     if (
-        teclado.x !== 0 ||
-        teclado.y !== 0
+        direcao.x === 0 &&
+        direcao.y === 0
     ) {
 
-        dx = teclado.x;
-        dy = teclado.y;
+        direcao.x =
+            estado.joystick.x;
+
+        direcao.y =
+            estado.joystick.y;
 
     }
 
 
     moverJogador(
-        dx,
-        dy
+        direcao.x,
+        direcao.y
     );
 
 
-    personagemJogador.style.left =
-        `${estado.jogador.x}px`;
-
-    personagemJogador.style.top =
-        `${estado.jogador.y}px`;
-
-}
-
-
-/* =========================================================
-   LOOP PRINCIPAL
-========================================================= */
-
-let loopAtivo = false;
-
-
-function iniciarLoop() {
-
-    if (loopAtivo) {
-        return;
-    }
-
-
-    loopAtivo = true;
-
-    estado.ultimoFrame =
-        performance.now();
-
-
-    requestAnimationFrame(
-        loopJogo
+    atualizarAnimacao(
+        delta
     );
 
-}
+
+    atualizarCamera();
 
 
-function loopJogo(tempoAtual) {
-
-    const delta =
-        tempoAtual -
-        estado.ultimoFrame;
+    atualizarTempo(
+        delta
+    );
 
 
-    estado.ultimoFrame =
-        tempoAtual;
-
-
-    if (estado.jogoIniciado) {
-
-        atualizarMovimento();
-
-        atualizarAnimacao(delta);
-
-        atualizarCamera();
-
-        atualizarTempo(delta);
-
-        atualizarRegiao();
-
-    }
+    atualizarRegiao();
 
 
     requestAnimationFrame(
-        loopJogo
+        loop
     );
 
 }
 
 
 /* =========================================================
-   PREVENIR COMPORTAMENTOS DO CELULAR
+   EVITAR SCROLL NO CELULAR
 ========================================================= */
 
 document.addEventListener(
@@ -1506,7 +1580,7 @@ document.addEventListener(
     evento => {
 
         if (
-            estado.jogoIniciado
+            estado.iniciado
         ) {
 
             evento.preventDefault();
@@ -1521,13 +1595,9 @@ document.addEventListener(
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   FIM
 ========================================================= */
 
-document.body.classList.remove("noite");
-
-mensagemPersonagem.textContent = "";
-
 console.log(
-    "Life is dangerous, but use it more. — carregado."
+    "Life is dangerous, but use it more. carregado."
 );
