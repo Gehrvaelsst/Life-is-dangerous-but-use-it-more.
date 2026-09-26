@@ -1,1 +1,469 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #080808;
+    font-family: Georgia, "Times New Roman", serif;
+    color: white;
+}
+
+body {
+    touch-action: none;
+}
+
+
+/* =========================
+   TELAS
+========================= */
+
+.tela {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+    overflow: hidden;
+}
+
+.tela.ativa {
+    display: flex;
+}
+
+
+/* =========================
+   TELA INICIAL
+========================= */
+
+#tela-inicial {
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #242424 0%,
+            #111111 45%,
+            #050505 100%
+        );
+}
+
+.inicio-conteudo {
+    width: 90%;
+    max-width: 650px;
+
+    text-align: center;
+}
+
+.inicio-conteudo h1 {
+    font-size: clamp(32px, 7vw, 72px);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: 2px;
+
+    margin-bottom: 25px;
+}
+
+.inicio-conteudo p {
+    color: #a9a9a9;
+
+    font-size: clamp(14px, 3vw, 20px);
+
+    margin-bottom: 45px;
+}
+
+#btn-comecar {
+    padding: 15px 45px;
+
+    border: 1px solid #777;
+    background: transparent;
+    color: white;
+
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+#btn-comecar:hover {
+    background: #ffffff;
+    color: #000000;
+    border-color: white;
+}
+
+#btn-comecar:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================
+   SELEÇÃO DE PERSONAGEM
+========================= */
+
+#tela-personagens {
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #202020 0%,
+            #0d0d0d 60%,
+            #030303 100%
+        );
+}
+
+.selecao-conteudo {
+    width: min(900px, 92%);
+    max-height: 90vh;
+
+    text-align: center;
+}
+
+.selecao-conteudo h2 {
+    font-size: clamp(22px, 5vw, 42px);
+    font-weight: 400;
+    letter-spacing: 4px;
+
+    margin-bottom: 35px;
+}
+
+
+/* Lista dos personagens */
+
+.personagens {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    width: 100%;
+    max-width: 600px;
+
+    margin: 0 auto;
+}
+
+.personagem {
+    min-height: 55px;
+
+    border: 1px solid #444;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 17px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+.personagem.selecionavel:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #aaa;
+}
+
+.personagem.selecionavel:active {
+    transform: scale(0.97);
+}
+
+
+/* Personagens ainda não disponíveis */
+
+.personagem.indisponivel {
+    color: #555;
+
+    border-color: #242424;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    cursor: not-allowed;
+}
+
+#mensagem-personagem {
+    min-height: 25px;
+
+    margin-top: 20px;
+
+    color: #999;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   MAPA
+========================= */
+
+#tela-jogo {
+    display: none;
+
+    background: #182018;
+}
+
+#tela-jogo.ativa {
+    display: block;
+}
+
+
+/* =========================
+   MUNDO
+========================= */
+
+#mundo {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 2000px;
+    height: 1400px;
+
+    background-color: #263626;
+
+    /*
+       Por enquanto é apenas a base do mundo.
+       Depois vamos construir o mapa de verdade.
+    */
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+}
+
+
+/* =========================
+   ELOY
+========================= */
+
+#eloy {
+    position: absolute;
+
+    width: 64px;
+    height: auto;
+
+    left: 900px;
+    top: 600px;
+
+    image-rendering: pixelated;
+
+    user-select: none;
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   INTERFACE DO JOGO
+========================= */
+
+#interface-jogo {
+    position: fixed;
+
+    top: 15px;
+    right: 15px;
+
+    z-index: 1000;
+
+    pointer-events: none;
+}
+
+#relogio {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    padding: 9px 13px;
+
+    min-width: 105px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    background: rgba(0, 0, 0, 0.65);
+
+    backdrop-filter: blur(4px);
+}
+
+#hora {
+    font-family: monospace;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+}
+
+#periodo {
+    margin-top: 3px;
+
+    color: #ccc;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   ANALÓGICO
+========================= */
+
+#controle {
+    position: fixed;
+
+    left: 25px;
+    bottom: 25px;
+
+    width: 140px;
+    height: 140px;
+
+    z-index: 1000;
+
+    pointer-events: none;
+}
+
+#analogo {
+    position: relative;
+
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 255, 255, 0.25);
+
+    background: rgba(0, 0, 0, 0.3);
+
+    pointer-events: auto;
+
+    touch-action: none;
+}
+
+#analogo-centro {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 60px;
+    height: 60px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 255, 255, 0.45);
+
+    background: rgba(255, 255, 255, 0.12);
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 600px) {
+
+    .inicio-conteudo h1 {
+        font-size: 34px;
+    }
+
+    .inicio-conteudo p {
+        font-size: 14px;
+        margin-bottom: 35px;
+    }
+
+    #btn-comecar {
+        padding: 14px 35px;
+    }
+
+    .selecao-conteudo h2 {
+        font-size: 22px;
+        letter-spacing: 2px;
+        margin-bottom: 22px;
+    }
+
+    .personagens {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 7px;
+
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .personagem {
+        min-height: 48px;
+        font-size: 15px;
+    }
+
+    #controle {
+        left: 18px;
+        bottom: 18px;
+
+        width: 125px;
+        height: 125px;
+    }
+
+    #analogo {
+        width: 125px;
+        height: 125px;
+    }
+
+    #analogo-centro {
+        width: 55px;
+        height: 55px;
+    }
+
+    #interface-jogo {
+        top: 10px;
+        right: 10px;
+    }
+
+    #relogio {
+        min-width: 90px;
+        padding: 7px 10px;
+    }
+
+    #hora {
+        font-size: 17px;
+    }
+  }
