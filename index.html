@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#090909">
 
     <title>Life is dangerous, but use it more.</title>
 
@@ -11,12 +18,15 @@
 
 <body>
 
-    <!-- =========================
+    <!-- =====================================================
          TELA INICIAL
-    ========================== -->
-    <main id="tela-inicial" class="tela ativa">
+    ====================================================== -->
 
-        <div class="inicio-conteudo">
+    <section id="tela-inicial" class="tela ativa">
+
+        <div class="inicio">
+
+            <div class="simbolo">𐌑</div>
 
             <h1>
                 Life is dangerous,<br>
@@ -27,121 +37,496 @@
                 Algumas escolhas não podem ser desfeitas.
             </p>
 
-            <button id="btn-comecar">
+            <button id="btn-comecar" class="botao-principal">
                 COMEÇAR
             </button>
 
         </div>
 
-    </main>
+    </section>
 
 
-    <!-- =========================
+    <!-- =====================================================
          SELEÇÃO DE PERSONAGEM
-    ========================== -->
-    <main id="tela-personagens" class="tela">
+    ====================================================== -->
 
-        <div class="selecao-conteudo">
+    <section id="tela-personagens" class="tela">
 
-            <h2>ESCOLHA SEU PERSONAGEM</h2>
+        <div class="selecao">
 
-            <div class="personagens">
+            <div class="cabecalho-selecao">
 
-                <button class="personagem selecionavel" data-personagem="Eloy">
-                    Eloy
+                <span class="pequeno-titulo">
+                    LIFE IS DANGEROUS
+                </span>
+
+                <h2>
+                    ESCOLHA SEU PERSONAGEM
+                </h2>
+
+                <p>
+                    Escolha quem irá atravessar este mundo.
+                </p>
+
+            </div>
+
+
+            <div id="lista-personagens" class="lista-personagens">
+
+                <button
+                    class="personagem disponivel"
+                    data-personagem="Eloy"
+                >
+                    <span class="numero">01</span>
+                    <span class="nome">Eloy</span>
+                    <span class="status">DISPONÍVEL</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Mason">
-                    Mason
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Mason"
+                >
+                    <span class="numero">02</span>
+                    <span class="nome">Mason</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Hades">
-                    Hades
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Hades"
+                >
+                    <span class="numero">03</span>
+                    <span class="nome">Hades</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Selin">
-                    Selin
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Selin"
+                >
+                    <span class="numero">04</span>
+                    <span class="nome">Selin</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Kimi">
-                    Kimi
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Kimi"
+                >
+                    <span class="numero">05</span>
+                    <span class="nome">Kimi</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Persephone">
-                    Persephone
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Persephone"
+                >
+                    <span class="numero">06</span>
+                    <span class="nome">Persephone</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Lizzie">
-                    Lizzie
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Lizzie"
+                >
+                    <span class="numero">07</span>
+                    <span class="nome">Lizzie</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Camilla">
-                    Camilla
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Camilla"
+                >
+                    <span class="numero">08</span>
+                    <span class="nome">Camilla</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Khyara">
-                    Khyara
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Khyara"
+                >
+                    <span class="numero">09</span>
+                    <span class="nome">Khyara</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Aaron">
-                    Aaron
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Aaron"
+                >
+                    <span class="numero">10</span>
+                    <span class="nome">Aaron</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
-                <button class="personagem indisponivel" data-personagem="Jaden">
-                    Jaden
+
+                <button
+                    class="personagem bloqueado"
+                    data-personagem="Jaden"
+                >
+                    <span class="numero">11</span>
+                    <span class="nome">Jaden</span>
+                    <span class="status">BLOQUEADO</span>
                 </button>
 
             </div>
 
-            <p id="mensagem-personagem"></p>
+
+            <div
+                id="mensagem-personagem"
+                class="mensagem-personagem"
+            ></div>
 
         </div>
 
-    </main>
+    </section>
 
 
-    <!-- =========================
-         MAPA
-    ========================== -->
-    <main id="tela-jogo" class="tela">
+    <!-- =====================================================
+         JOGO / MAPA
+    ====================================================== -->
 
-        <!-- Interface superior -->
-        <div id="interface-jogo">
+    <section id="tela-jogo" class="tela">
+
+        <!-- =================================================
+             INTERFACE SUPERIOR
+        ================================================== -->
+
+        <header id="interface-superior">
 
             <div id="relogio">
-                <span id="hora">08:00</span>
-                <span id="periodo">☀️ DIA</span>
+
+                <div id="hora">
+                    08:00
+                </div>
+
+                <div id="periodo">
+                    ☀ DIA
+                </div>
+
+            </div>
+
+
+            <div id="nome-local">
+                DISTRITO CENTRAL
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             ÁREA DO MUNDO
+        ================================================== -->
+
+        <div id="area-mundo">
+
+            <div id="mundo">
+
+
+                <!-- =========================================
+                     MURALHA EXTERNA
+                ========================================== -->
+
+                <div class="muralha muralha-norte">
+                    <div class="torre torre-norte-esquerda"></div>
+                    <div class="torre torre-norte-direita"></div>
+                </div>
+
+                <div class="muralha muralha-sul">
+                    <div class="torre torre-sul-esquerda"></div>
+                    <div class="torre torre-sul-direita"></div>
+                </div>
+
+                <div class="muralha muralha-oeste">
+                    <div class="torre torre-oeste"></div>
+                </div>
+
+                <div class="muralha muralha-leste">
+                    <div class="torre torre-leste"></div>
+                </div>
+
+
+                <!-- =========================================
+                     DISTRITO CENTRAL
+                ========================================== -->
+
+                <section class="regiao distrito-central">
+
+                    <div class="placa-regiao">
+                        DISTRITO CENTRAL
+                    </div>
+
+
+                    <!-- Praça -->
+
+                    <div class="praca-central">
+
+                        <div class="fonte">
+
+                            <div class="agua-fonte"></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Casas -->
+
+                    <div class="predio casa casa-1">
+                        <div class="janela"></div>
+                        <div class="porta"></div>
+                    </div>
+
+                    <div class="predio casa casa-2">
+                        <div class="janela"></div>
+                        <div class="porta"></div>
+                    </div>
+
+                    <div class="predio casa casa-3">
+                        <div class="janela"></div>
+                        <div class="porta"></div>
+                    </div>
+
+                    <div class="predio casa casa-4">
+                        <div class="janela"></div>
+                        <div class="porta"></div>
+                    </div>
+
+
+                    <!-- Construções maiores -->
+
+                    <div class="predio grande grande-1">
+                        <div class="janela janela-1"></div>
+                        <div class="janela janela-2"></div>
+                        <div class="porta"></div>
+                    </div>
+
+                    <div class="predio grande grande-2">
+                        <div class="janela janela-1"></div>
+                        <div class="janela janela-2"></div>
+                        <div class="porta"></div>
+                    </div>
+
+
+                    <!-- Ruas -->
+
+                    <div class="rua rua-horizontal-1"></div>
+                    <div class="rua rua-horizontal-2"></div>
+
+                    <div class="rua rua-vertical-1"></div>
+                    <div class="rua rua-vertical-2"></div>
+
+
+                    <!-- Calçadas -->
+
+                    <div class="calcada calcada-1"></div>
+                    <div class="calcada calcada-2"></div>
+                    <div class="calcada calcada-3"></div>
+                    <div class="calcada calcada-4"></div>
+
+                </section>
+
+
+                <!-- =========================================
+                     DISTRITO ABANDONADO
+                ========================================== -->
+
+                <section class="regiao distrito-abandonado">
+
+                    <div class="placa-regiao">
+                        DISTRITO ABANDONADO
+                    </div>
+
+
+                    <div class="ruina ruina-1">
+                        <div class="janela-quebrada"></div>
+                        <div class="janela-quebrada"></div>
+                    </div>
+
+                    <div class="ruina ruina-2">
+                        <div class="janela-quebrada"></div>
+                    </div>
+
+                    <div class="ruina ruina-3"></div>
+
+
+                    <div class="entulho entulho-1"></div>
+                    <div class="entulho entulho-2"></div>
+                    <div class="entulho entulho-3"></div>
+
+
+                    <div class="rua-destruida rua-destruida-1"></div>
+                    <div class="rua-destruida rua-destruida-2"></div>
+
+                </section>
+
+
+                <!-- =========================================
+                     TEMPLO / ZONA RITUALÍSTICA
+                ========================================== -->
+
+                <section class="regiao zona-templo">
+
+                    <div class="placa-regiao">
+                        ZONA RITUALÍSTICA
+                    </div>
+
+
+                    <div class="templo">
+
+                        <div class="templo-telhado"></div>
+
+                        <div class="templo-corpo">
+
+                            <div class="coluna coluna-1"></div>
+                            <div class="coluna coluna-2"></div>
+
+                            <div class="porta-templo"></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="simbolo-ritual simbolo-1">𐌑</div>
+                    <div class="simbolo-ritual simbolo-2">✦</div>
+                    <div class="simbolo-ritual simbolo-3">𐌑</div>
+
+                </section>
+
+
+                <!-- =========================================
+                     FLORESTA
+                ========================================== -->
+
+                <section class="regiao floresta">
+
+                    <div class="placa-regiao">
+                        FLORESTA EXTERIOR
+                    </div>
+
+
+                    <div class="arvore arvore-1"></div>
+                    <div class="arvore arvore-2"></div>
+                    <div class="arvore arvore-3"></div>
+                    <div class="arvore arvore-4"></div>
+                    <div class="arvore arvore-5"></div>
+                    <div class="arvore arvore-6"></div>
+                    <div class="arvore arvore-7"></div>
+                    <div class="arvore arvore-8"></div>
+                    <div class="arvore arvore-9"></div>
+                    <div class="arvore arvore-10"></div>
+                    <div class="arvore arvore-11"></div>
+                    <div class="arvore arvore-12"></div>
+
+                </section>
+
+
+                <!-- =========================================
+                     ZONA MORTA
+                ========================================== -->
+
+                <section class="regiao zona-morta">
+
+                    <div class="placa-regiao">
+                        ZONA DE RUPTURA
+                    </div>
+
+
+                    <div class="rachadura rachadura-1"></div>
+                    <div class="rachadura rachadura-2"></div>
+                    <div class="rachadura rachadura-3"></div>
+                    <div class="rachadura rachadura-4"></div>
+
+
+                    <div class="pedra pedra-1"></div>
+                    <div class="pedra pedra-2"></div>
+                    <div class="pedra pedra-3"></div>
+
+                </section>
+
+
+                <!-- =========================================
+                     ESTRADAS PRINCIPAIS
+                ========================================== -->
+
+                <div class="estrada estrada-norte-sul"></div>
+
+                <div class="estrada estrada-oeste-leste"></div>
+
+
+                <!-- =========================================
+                     PERSONAGEM
+                ========================================== -->
+
+                <div id="personagem-jogador">
+
+                    <div id="eloy">
+
+                        <img
+                            src="eloy.png"
+                            alt="Eloy"
+                            draggable="false"
+                        >
+
+                    </div>
+
+                </div>
+
+
             </div>
 
         </div>
 
 
-        <!-- Mundo -->
-        <div id="mundo">
+        <!-- =================================================
+             ANALÓGICO
+        ================================================== -->
 
-            <!-- Eloy será colocado aqui pelo JavaScript -->
-            <img
-                id="eloy"
-                src="eloy.png"
-                alt="Eloy"
-            >
-
-        </div>
-
-
-        <!-- Analógico -->
-        <div id="controle">
+        <div
+            id="controle-analogico"
+            aria-label="Controle de movimento"
+        >
 
             <div id="analogo">
+
                 <div id="analogo-centro"></div>
+
             </div>
 
         </div>
 
-    </main>
 
+        <!-- =================================================
+             INDICADOR DE CONTROLES
+        ================================================== -->
+
+        <div id="aviso-controle">
+            MOVA-SE
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
     <script src="script.js"></script>
 
 </body>
-</html>
+
+                    </html>
