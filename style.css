@@ -1,22 +1,37 @@
-/* =========================
-   CONFIGURAÇÕES GERAIS
-========================= */
+/* =========================================================
+   LIFE IS DANGEROUS, BUT USE IT MORE.
+   STYLE.CSS — MAPA PRINCIPAL
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 html,
 body {
     width: 100%;
     height: 100%;
+
     overflow: hidden;
-    background: #080808;
-    font-family: Georgia, "Times New Roman", serif;
-    color: white;
+
+    background: #080909;
+
+    color: #eee;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 }
 
 body {
@@ -24,18 +39,20 @@ body {
 }
 
 
-/* =========================
+/* =========================================================
    TELAS
-========================= */
+========================================================= */
 
 .tela {
     position: fixed;
+
     inset: 0;
 
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
     display: none;
+
     overflow: hidden;
 }
 
@@ -44,9 +61,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================================
    TELA INICIAL
-========================= */
+========================================================= */
 
 #tela-inicial {
     align-items: center;
@@ -55,69 +72,85 @@ body {
     background:
         radial-gradient(
             circle at center,
-            #242424 0%,
-            #111111 45%,
+            #292929 0%,
+            #121212 42%,
             #050505 100%
         );
 }
 
-.inicio-conteudo {
-    width: 90%;
-    max-width: 650px;
+.inicio {
+    width: 92%;
+
+    max-width: 720px;
 
     text-align: center;
 }
 
-.inicio-conteudo h1 {
-    font-size: clamp(32px, 7vw, 72px);
-    line-height: 1.05;
-    font-weight: 400;
-    letter-spacing: 2px;
-
+.simbolo {
     margin-bottom: 25px;
+
+    font-size: 42px;
+
+    opacity: .8;
 }
 
-.inicio-conteudo p {
-    color: #a9a9a9;
+.inicio h1 {
+    font-size: clamp(34px, 7vw, 72px);
 
-    font-size: clamp(14px, 3vw, 20px);
+    line-height: 1.05;
 
-    margin-bottom: 45px;
+    font-weight: 400;
+
+    letter-spacing: 2px;
 }
 
-#btn-comecar {
+.inicio p {
+    margin-top: 24px;
+
+    color: #aaa;
+
+    font-size: clamp(13px, 2.5vw, 18px);
+}
+
+.botao-principal {
+    margin-top: 45px;
+
     padding: 15px 45px;
 
     border: 1px solid #777;
+
     background: transparent;
-    color: white;
+
+    color: #fff;
 
     font-family: inherit;
-    font-size: 16px;
-    letter-spacing: 3px;
+
+    font-size: 15px;
+
+    letter-spacing: 4px;
 
     cursor: pointer;
 
     transition:
-        background 0.2s,
-        border-color 0.2s,
-        transform 0.2s;
+        .2s ease;
 }
 
-#btn-comecar:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: white;
+.botao-principal:hover {
+    background: #fff;
+
+    color: #000;
+
+    border-color: #fff;
 }
 
-#btn-comecar:active {
-    transform: scale(0.96);
+.botao-principal:active {
+    transform: scale(.96);
 }
 
 
-/* =========================
+/* =========================================================
    SELEÇÃO DE PERSONAGEM
-========================= */
+========================================================= */
 
 #tela-personagens {
     align-items: center;
@@ -126,116 +159,203 @@ body {
     background:
         radial-gradient(
             circle at center,
-            #202020 0%,
-            #0d0d0d 60%,
-            #030303 100%
+            #242424 0%,
+            #111 48%,
+            #050505 100%
         );
+
+    overflow-y: auto;
 }
 
-.selecao-conteudo {
+.selecao {
     width: min(900px, 92%);
-    max-height: 90vh;
 
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    padding: 30px 0;
+}
+
+.cabecalho-selecao {
     text-align: center;
+
+    margin-bottom: 30px;
 }
 
-.selecao-conteudo h2 {
-    font-size: clamp(22px, 5vw, 42px);
-    font-weight: 400;
+.pequeno-titulo {
+    color: #777;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
     letter-spacing: 4px;
+}
 
-    margin-bottom: 35px;
+.cabecalho-selecao h2 {
+    margin-top: 12px;
+
+    font-size: clamp(24px, 5vw, 44px);
+
+    font-weight: 400;
+
+    letter-spacing: 3px;
+}
+
+.cabecalho-selecao p {
+    margin-top: 10px;
+
+    color: #888;
+
+    font-size: 14px;
 }
 
 
-/* Lista dos personagens */
+/* =========================================================
+   LISTA
+========================================================= */
 
-.personagens {
+.lista-personagens {
+    width: min(700px, 100%);
+
+    margin: auto;
+
     display: grid;
 
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 10px;
-
-    width: 100%;
-    max-width: 600px;
-
-    margin: 0 auto;
+    gap: 8px;
 }
 
 .personagem {
-    min-height: 55px;
+    position: relative;
 
-    border: 1px solid #444;
+    min-height: 65px;
 
-    background: rgba(255, 255, 255, 0.03);
+    display: flex;
 
-    color: white;
+    align-items: center;
+
+    padding: 0 18px;
+
+    border: 1px solid #303030;
+
+    background: rgba(255,255,255,.025);
+
+    color: #eee;
 
     font-family: inherit;
-    font-size: 17px;
-
-    letter-spacing: 1px;
 
     cursor: pointer;
 
     transition:
-        background 0.2s,
-        border-color 0.2s,
-        transform 0.2s;
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
-.personagem.selecionavel:hover {
-    background: rgba(255, 255, 255, 0.12);
+.personagem .numero {
+    width: 35px;
+
+    color: #555;
+
+    font-family: monospace;
+
+    font-size: 11px;
+}
+
+.personagem .nome {
+    flex: 1;
+
+    text-align: left;
+
+    font-size: 17px;
+
+    letter-spacing: 1px;
+}
+
+.personagem .status {
+    color: #555;
+
+    font-family: monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.personagem.disponivel {
+    border-color: #626262;
+}
+
+.personagem.disponivel .status {
+    color: #aaa;
+}
+
+.personagem.disponivel:hover {
+    background: rgba(255,255,255,.09);
+
     border-color: #aaa;
 }
 
-.personagem.selecionavel:active {
-    transform: scale(0.97);
+.personagem.disponivel:active {
+    transform: scale(.98);
 }
 
+.personagem.bloqueado {
+    color: #444;
 
-/* Personagens ainda não disponíveis */
-
-.personagem.indisponivel {
-    color: #555;
-
-    border-color: #242424;
-
-    background: rgba(0, 0, 0, 0.25);
+    border-color: #1e1e1e;
 
     cursor: not-allowed;
 }
 
-#mensagem-personagem {
+.personagem.bloqueado .status {
+    color: #333;
+}
+
+.mensagem-personagem {
     min-height: 25px;
 
     margin-top: 20px;
 
     color: #999;
 
-    font-size: 14px;
+    text-align: center;
+
+    font-size: 13px;
 }
 
 
-/* =========================
-   MAPA
-========================= */
+/* =========================================================
+   MAPA — ÁREA PRINCIPAL
+========================================================= */
 
 #tela-jogo {
     display: none;
 
-    background: #182018;
+    background: #121812;
 }
 
 #tela-jogo.ativa {
     display: block;
 }
 
+#area-mundo {
+    position: absolute;
 
-/* =========================
+    inset: 0;
+
+    overflow: hidden;
+
+    background: #151c15;
+}
+
+
+/* =========================================================
    MUNDO
-========================= */
+========================================================= */
 
 #mundo {
     position: absolute;
@@ -243,82 +363,1096 @@ body {
     left: 0;
     top: 0;
 
-    width: 2000px;
-    height: 1400px;
+    width: 3200px;
+    height: 2200px;
 
-    background-color: #263626;
+    overflow: hidden;
 
-    /*
-       Por enquanto é apenas a base do mundo.
-       Depois vamos construir o mapa de verdade.
-    */
+    background-color: #334332;
 
     background-image:
-        linear-gradient(
-            rgba(255, 255, 255, 0.025) 1px,
-            transparent 1px
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255,255,255,.025) 0 2px,
+            transparent 3px
         ),
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.025) 1px,
-            transparent 1px
+        radial-gradient(
+            circle at 70% 65%,
+            rgba(0,0,0,.04) 0 3px,
+            transparent 4px
         );
 
-    background-size: 40px 40px;
+    background-size: 90px 90px;
+
+    transform-origin: top left;
+
+    transition:
+        filter 1.5s ease;
 }
 
 
-/* =========================
-   ELOY
-========================= */
+/* =========================================================
+   CAMINHOS PRINCIPAIS
+========================================================= */
+
+.estrada {
+    position: absolute;
+
+    background: #55584f;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.12),
+        0 5px 10px rgba(0,0,0,.12);
+}
+
+.estrada-norte-sul {
+    left: 1470px;
+    top: 120px;
+
+    width: 260px;
+    height: 1960px;
+}
+
+.estrada-oeste-leste {
+    left: 180px;
+    top: 950px;
+
+    width: 2840px;
+    height: 250px;
+}
+
+
+/* =========================================================
+   RUAS DO DISTRITO
+========================================================= */
+
+.rua {
+    position: absolute;
+
+    background: #65665e;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.1);
+}
+
+.rua-horizontal-1 {
+    left: 440px;
+    top: 450px;
+
+    width: 980px;
+    height: 105px;
+}
+
+.rua-horizontal-2 {
+    left: 440px;
+    top: 780px;
+
+    width: 980px;
+    height: 105px;
+}
+
+.rua-vertical-1 {
+    left: 580px;
+    top: 270px;
+
+    width: 105px;
+    height: 700px;
+}
+
+.rua-vertical-2 {
+    left: 1110px;
+    top: 270px;
+
+    width: 105px;
+    height: 700px;
+}
+
+
+/* =========================================================
+   MURALHAS
+========================================================= */
+
+.muralha {
+    position: absolute;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #777a72 0,
+            #777a72 42px,
+            #666961 42px,
+            #666961 45px
+        );
+
+    border: 5px solid #444740;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.3);
+
+    z-index: 50;
+}
+
+.muralha-norte {
+    left: 0;
+    top: 0;
+
+    width: 3200px;
+    height: 125px;
+}
+
+.muralha-sul {
+    left: 0;
+    bottom: 0;
+
+    width: 3200px;
+    height: 125px;
+}
+
+.muralha-oeste {
+    left: 0;
+    top: 0;
+
+    width: 125px;
+    height: 2200px;
+}
+
+.muralha-leste {
+    right: 0;
+    top: 0;
+
+    width: 125px;
+    height: 2200px;
+}
+
+
+/* =========================================================
+   TORRES
+========================================================= */
+
+.torre {
+    position: absolute;
+
+    width: 125px;
+    height: 155px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #85877f 0,
+            #85877f 38px,
+            #686b63 38px,
+            #686b63 42px
+        );
+
+    border: 6px solid #3d403a;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.35);
+
+    z-index: 60;
+}
+
+.torre::before {
+    content: "";
+
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+    top: -22px;
+
+    height: 28px;
+
+    background: #494c46;
+
+    border: 3px solid #343731;
+}
+
+.torre-norte-esquerda {
+    left: 260px;
+    top: -10px;
+}
+
+.torre-norte-direita {
+    right: 260px;
+    top: -10px;
+}
+
+.torre-sul-esquerda {
+    left: 260px;
+    bottom: -10px;
+}
+
+.torre-sul-direita {
+    right: 260px;
+    bottom: -10px;
+}
+
+.torre-oeste {
+    left: -10px;
+    top: 1000px;
+}
+
+.torre-leste {
+    right: -10px;
+    top: 1000px;
+}
+
+
+/* =========================================================
+   REGIÕES
+========================================================= */
+
+.regiao {
+    position: absolute;
+}
+
+.placa-regiao {
+    position: absolute;
+
+    padding: 7px 13px;
+
+    background: rgba(0,0,0,.48);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    color: rgba(255,255,255,.55);
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DISTRITO CENTRAL
+========================================================= */
+
+.distrito-central {
+    left: 300px;
+    top: 220px;
+
+    width: 1200px;
+    height: 730px;
+}
+
+.distrito-central .placa-regiao {
+    left: 30px;
+    top: 25px;
+}
+
+
+/* =========================================================
+   PRAÇA
+========================================================= */
+
+.praca-central {
+    position: absolute;
+
+    left: 665px;
+    top: 315px;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: #73756d;
+
+    border: 10px solid #555850;
+
+    box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.08),
+        0 10px 25px rgba(0,0,0,.2);
+}
+
+.fonte {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 125px;
+    height: 125px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #747873;
+
+    border: 9px solid #484c46;
+
+    box-shadow:
+        inset 0 0 0 5px #8a8e86;
+}
+
+.agua-fonte {
+    position: absolute;
+
+    inset: 20px;
+
+    border-radius: 50%;
+
+    background: #374f50;
+
+    box-shadow:
+        inset 0 0 15px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   PRÉDIOS / CASAS
+========================================================= */
+
+.predio {
+    position: absolute;
+
+    background: #81786d;
+
+    border: 5px solid #4b4741;
+
+    box-shadow:
+        0 8px 14px rgba(0,0,0,.18);
+}
+
+.predio::before {
+    content: "";
+
+    position: absolute;
+
+    left: -5px;
+    right: -5px;
+    top: -28px;
+
+    height: 30px;
+
+    background: #4c4641;
+
+    border: 4px solid #35332f;
+
+    transform: skewX(-15deg);
+}
+
+.casa {
+    width: 190px;
+    height: 140px;
+}
+
+.casa-1 {
+    left: 60px;
+    top: 115px;
+}
+
+.casa-2 {
+    left: 330px;
+    top: 115px;
+}
+
+.casa-3 {
+    left: 950px;
+    top: 120px;
+}
+
+.casa-4 {
+    left: 950px;
+    top: 660px;
+}
+
+.janela {
+    position: absolute;
+
+    width: 38px;
+    height: 42px;
+
+    left: 30px;
+    top: 45px;
+
+    background: #303d3b;
+
+    border: 4px solid #4a443d;
+}
+
+.porta {
+    position: absolute;
+
+    width: 35px;
+    height: 65px;
+
+    bottom: 0;
+    right: 25px;
+
+    background: #403831;
+
+    border: 3px solid #302b27;
+}
+
+.grande {
+    width: 240px;
+    height: 185px;
+
+    background: #71695f;
+}
+
+.grande-1 {
+    left: 25px;
+    top: 590px;
+}
+
+.grande-2 {
+    left: 1100px;
+    top: 350px;
+}
+
+.grande .janela-1 {
+    position: absolute;
+
+    left: 35px;
+    top: 50px;
+
+    width: 45px;
+    height: 50px;
+
+    background: #33403e;
+
+    border: 4px solid #4d4841;
+}
+
+.grande .janela-2 {
+    position: absolute;
+
+    right: 35px;
+    top: 50px;
+
+    width: 45px;
+    height: 50px;
+
+    background: #33403e;
+
+    border: 4px solid #4d4841;
+}
+
+
+/* =========================================================
+   CALÇADAS
+========================================================= */
+
+.calcada {
+    position: absolute;
+
+    background: #8b8a80;
+
+    border: 2px solid rgba(0,0,0,.15);
+}
+
+.calcada-1 {
+    left: 430px;
+    top: 420px;
+
+    width: 1000px;
+    height: 30px;
+}
+
+.calcada-2 {
+    left: 430px;
+    top: 750px;
+
+    width: 1000px;
+    height: 30px;
+}
+
+.calcada-3 {
+    left: 550px;
+    top: 270px;
+
+    width: 30px;
+    height: 690px;
+}
+
+.calcada-4 {
+    left: 1080px;
+    top: 270px;
+
+    width: 30px;
+    height: 690px;
+}
+
+
+/* =========================================================
+   DISTRITO ABANDONADO
+========================================================= */
+
+.distrito-abandonado {
+    left: 230px;
+    top: 1250px;
+
+    width: 1050px;
+    height: 700px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,.08) 1px,
+            transparent 2px
+        );
+
+    background-size: 35px 35px;
+}
+
+.distrito-abandonado .placa-regiao {
+    left: 30px;
+    top: 30px;
+}
+
+.ruina {
+    position: absolute;
+
+    background: #625d55;
+
+    border: 7px solid #3e3b36;
+
+    box-shadow:
+        0 8px 15px rgba(0,0,0,.25);
+}
+
+.ruina-1 {
+    left: 90px;
+    top: 130px;
+
+    width: 330px;
+    height: 240px;
+}
+
+.ruina-2 {
+    left: 550px;
+    top: 100px;
+
+    width: 300px;
+    height: 310px;
+}
+
+.ruina-3 {
+    left: 300px;
+    top: 470px;
+
+    width: 430px;
+    height: 140px;
+}
+
+.janela-quebrada {
+    position: relative;
+
+    display: inline-block;
+
+    width: 50px;
+    height: 65px;
+
+    margin: 45px 20px;
+
+    background: #242827;
+
+    border: 4px solid #45433e;
+}
+
+.entulho {
+    position: absolute;
+
+    width: 75px;
+    height: 55px;
+
+    background: #464640;
+
+    transform: rotate(12deg);
+
+    box-shadow:
+        12px 15px 0 #5b5951,
+        -10px 10px 0 #3d3c37;
+}
+
+.entulho-1 {
+    left: 40px;
+    top: 440px;
+}
+
+.entulho-2 {
+    left: 800px;
+    top: 470px;
+}
+
+.entulho-3 {
+    left: 870px;
+    top: 160px;
+}
+
+.rua-destruida {
+    position: absolute;
+
+    background: #4b4c47;
+
+    transform: rotate(-7deg);
+}
+
+.rua-destruida-1 {
+    left: 0;
+    top: 390px;
+
+    width: 1100px;
+    height: 70px;
+}
+
+.rua-destruida-2 {
+    left: 430px;
+    top: 0;
+
+    width: 65px;
+    height: 700px;
+}
+
+
+/* =========================================================
+   ZONA DO TEMPLO
+========================================================= */
+
+.zona-templo {
+    left: 2050px;
+    top: 250px;
+
+    width: 750px;
+    height: 620px;
+}
+
+.zona-templo .placa-regiao {
+    left: 20px;
+    top: 20px;
+}
+
+.templo {
+    position: absolute;
+
+    left: 170px;
+    top: 130px;
+
+    width: 420px;
+    height: 370px;
+}
+
+.templo-telhado {
+    position: absolute;
+
+    left: -35px;
+    top: 0;
+
+    width: 490px;
+    height: 115px;
+
+    background: #373b37;
+
+    border: 8px solid #242724;
+
+    clip-path: polygon(
+        8% 100%,
+        50% 0,
+        92% 100%
+    );
+}
+
+.templo-corpo {
+    position: absolute;
+
+    left: 35px;
+    top: 95px;
+
+    width: 350px;
+    height: 260px;
+
+    background: #76776d;
+
+    border: 8px solid #42453f;
+}
+
+.coluna {
+    position: absolute;
+
+    top: 15px;
+
+    width: 45px;
+    height: 220px;
+
+    background: #9a998e;
+
+    border: 4px solid #55574f;
+}
+
+.coluna-1 {
+    left: 35px;
+}
+
+.coluna-2 {
+    right: 35px;
+}
+
+.porta-templo {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 80px;
+    height: 145px;
+
+    transform: translateX(-50%);
+
+    background: #272a26;
+
+    border: 6px solid #4d4e47;
+}
+
+.simbolo-ritual {
+    position: absolute;
+
+    color: rgba(255,255,255,.28);
+
+    font-size: 55px;
+}
+
+.simbolo-1 {
+    left: 60px;
+    top: 180px;
+}
+
+.simbolo-2 {
+    right: 70px;
+    top: 350px;
+}
+
+.simbolo-3 {
+    left: 300px;
+    bottom: 10px;
+}
+
+
+/* =========================================================
+   FLORESTA
+========================================================= */
+
+.floresta {
+    left: 2050px;
+    top: 1050px;
+
+    width: 950px;
+    height: 850px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #293b29 0%,
+            #203020 70%,
+            #182518 100%
+        );
+}
+
+.floresta .placa-regiao {
+    left: 30px;
+    top: 30px;
+}
+
+.arvore {
+    position: absolute;
+
+    width: 95px;
+    height: 115px;
+
+    background: #263d27;
+
+    border-radius: 50%;
+
+    box-shadow:
+        inset 15px -10px 0 rgba(0,0,0,.12),
+        10px 8px 0 #4a3e2f;
+
+    z-index: 5;
+}
+
+.arvore::after {
+    content: "";
+
+    position: absolute;
+
+    left: 38px;
+    top: 85px;
+
+    width: 20px;
+    height: 65px;
+
+    background: #514536;
+
+    z-index: -1;
+}
+
+.arvore-1 {
+    left: 100px;
+    top: 120px;
+}
+
+.arvore-2 {
+    left: 300px;
+    top: 80px;
+}
+
+.arvore-3 {
+    left: 500px;
+    top: 160px;
+}
+
+.arvore-4 {
+    left: 720px;
+    top: 100px;
+}
+
+.arvore-5 {
+    left: 150px;
+    top: 380px;
+}
+
+.arvore-6 {
+    left: 420px;
+    top: 350px;
+}
+
+.arvore-7 {
+    left: 700px;
+    top: 400px;
+}
+
+.arvore-8 {
+    left: 850px;
+    top: 230px;
+}
+
+.arvore-9 {
+    left: 70px;
+    top: 600px;
+}
+
+.arvore-10 {
+    left: 320px;
+    top: 590px;
+}
+
+.arvore-11 {
+    left: 600px;
+    top: 650px;
+}
+
+.arvore-12 {
+    left: 820px;
+    top: 570px;
+}
+
+
+/* =========================================================
+   ZONA DE RUPTURA
+========================================================= */
+
+.zona-morta {
+    left: 1300px;
+    top: 1320px;
+
+    width: 650px;
+    height: 620px;
+
+    background:
+        radial-gradient(
+            circle,
+            #242726 0,
+            #1c1e1d 65%,
+            #151716 100%
+        );
+
+    border: 4px solid #111;
+}
+
+.zona-morta .placa-regiao {
+    left: 25px;
+    top: 25px;
+
+    color: #888;
+}
+
+.rachadura {
+    position: absolute;
+
+    height: 9px;
+
+    background: #080909;
+
+    transform: rotate(-20deg);
+
+    box-shadow:
+        0 0 8px rgba(0,0,0,.8);
+}
+
+.rachadura-1 {
+    left: 80px;
+    top: 180px;
+
+    width: 450px;
+}
+
+.rachadura-2 {
+    left: 200px;
+    top: 350px;
+
+    width: 350px;
+
+    transform: rotate(30deg);
+}
+
+.rachadura-3 {
+    left: 50px;
+    top: 470px;
+
+    width: 300px;
+
+    transform: rotate(-10deg);
+}
+
+.rachadura-4 {
+    left: 430px;
+    top: 130px;
+
+    width: 180px;
+
+    transform: rotate(55deg);
+}
+
+.pedra {
+    position: absolute;
+
+    width: 70px;
+    height: 55px;
+
+    background: #4b4d4a;
+
+    clip-path: polygon(
+        15% 80%,
+        30% 15%,
+        75% 5%,
+        100% 60%,
+        70% 100%,
+        25% 95%
+    );
+}
+
+.pedra-1 {
+    left: 80px;
+    top: 300px;
+}
+
+.pedra-2 {
+    left: 480px;
+    top: 450px;
+}
+
+.pedra-3 {
+    left: 550px;
+    top: 250px;
+}
+
+
+/* =========================================================
+   PERSONAGEM
+========================================================= */
+
+#personagem-jogador {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+
+    z-index: 100;
+}
 
 #eloy {
     position: absolute;
 
-    width: 64px;
-    height: auto;
+    width: 80px;
+    height: 100px;
 
-    left: 900px;
-    top: 600px;
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+#eloy img {
+    display: block;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    width: auto;
+    height: auto;
 
     image-rendering: pixelated;
 
-    user-select: none;
+    object-fit: contain;
+
     pointer-events: none;
 
-    z-index: 10;
+    filter:
+        drop-shadow(
+            0 5px 3px rgba(0,0,0,.35)
+        );
 }
 
+/* =========================================================
+   INTERFACE SUPERIOR
+========================================================= */
 
-/* =========================
-   INTERFACE DO JOGO
-========================= */
-
-#interface-jogo {
+#interface-superior {
     position: fixed;
 
     top: 15px;
+    left: 15px;
     right: 15px;
 
     z-index: 1000;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
 
     pointer-events: none;
 }
 
 #relogio {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    min-width: 110px;
 
-    padding: 9px 13px;
+    padding: 8px 13px;
 
-    min-width: 105px;
+    background: rgba(5, 7, 5, .82);
 
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, .18);
 
-    background: rgba(0, 0, 0, 0.65);
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, .25);
 
-    backdrop-filter: blur(4px);
+    text-align: center;
+
+    backdrop-filter: blur(5px);
 }
 
 #hora {
@@ -332,45 +1466,70 @@ body {
 #periodo {
     margin-top: 3px;
 
-    color: #ccc;
+    color: #bbb;
 
-    font-size: 11px;
+    font-family: monospace;
+
+    font-size: 10px;
 
     letter-spacing: 1px;
 }
 
+#nome-local {
+    margin-top: 3px;
 
-/* =========================
-   ANALÓGICO
-========================= */
+    padding: 8px 13px;
 
-#controle {
+    color: rgba(255, 255, 255, .6);
+
+    background: rgba(0, 0, 0, .4);
+
+    border-left: 2px solid rgba(255, 255, 255, .3);
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   CONTROLE ANALÓGICO
+========================================================= */
+
+#controle-analogico {
     position: fixed;
 
     left: 25px;
     bottom: 25px;
 
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
 
-    z-index: 1000;
-
-    pointer-events: none;
+    z-index: 1500;
 }
 
 #analogo {
     position: relative;
 
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
 
     border-radius: 50%;
 
-    border: 2px solid rgba(255, 255, 255, 0.25);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, .08),
+            rgba(0, 0, 0, .35)
+        );
 
-    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, .16);
 
-    pointer-events: auto;
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, .3),
+        0 5px 20px rgba(0, 0, 0, .2);
 
     touch-action: none;
 }
@@ -381,89 +1540,1486 @@ body {
     left: 50%;
     top: 50%;
 
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
 
     transform: translate(-50%, -50%);
 
     border-radius: 50%;
 
-    border: 2px solid rgba(255, 255, 255, 0.45);
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(255, 255, 255, .2),
+            rgba(255, 255, 255, .05)
+        );
 
-    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, .22);
+
+    box-shadow:
+        0 5px 10px rgba(0, 0, 0, .35);
 
     pointer-events: none;
 }
 
 
-/* =========================
-   CELULAR
-========================= */
+/* =========================================================
+   AVISO DE CONTROLE
+========================================================= */
 
-@media (max-width: 600px) {
+#aviso-controle {
+    position: fixed;
 
-    .inicio-conteudo h1 {
+    left: 42px;
+    bottom: 10px;
+
+    z-index: 1501;
+
+    color: rgba(255, 255, 255, .3);
+
+    font-family: monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   NOITE
+========================================================= */
+
+body.noite #mundo {
+    filter:
+        brightness(.48)
+        saturate(.75);
+}
+
+body.noite #interface-superior {
+    filter: brightness(.9);
+}
+/* =========================================================
+   MAPA — ÁREA PRINCIPAL
+========================================================= */
+
+#tela-jogo {
+    display: none;
+    background: #121812;
+}
+
+#tela-jogo.ativa {
+    display: block;
+}
+
+#area-mundo {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    background: #151c15;
+}
+
+
+/* =========================================================
+   MUNDO
+========================================================= */
+
+#mundo {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 3200px;
+    height: 2200px;
+
+    overflow: hidden;
+
+    background-color: #334332;
+
+    background-image:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255,255,255,.025) 0 2px,
+            transparent 3px
+        ),
+        radial-gradient(
+            circle at 70% 65%,
+            rgba(0,0,0,.04) 0 3px,
+            transparent 4px
+        );
+
+    background-size: 90px 90px;
+
+    transform-origin: top left;
+
+    transition: filter 1.5s ease;
+}
+
+
+/* =========================================================
+   ESTRADAS PRINCIPAIS
+========================================================= */
+
+.estrada {
+    position: absolute;
+
+    background: #55584f;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.12),
+        0 5px 10px rgba(0,0,0,.12);
+}
+
+.estrada-norte-sul {
+    left: 1470px;
+    top: 120px;
+
+    width: 260px;
+    height: 1960px;
+}
+
+.estrada-oeste-leste {
+    left: 180px;
+    top: 950px;
+
+    width: 2840px;
+    height: 250px;
+}
+
+
+/* =========================================================
+   RUAS DO DISTRITO
+========================================================= */
+
+.rua {
+    position: absolute;
+
+    background: #65665e;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.1);
+}
+
+.rua-horizontal-1 {
+    left: 440px;
+    top: 450px;
+
+    width: 980px;
+    height: 105px;
+}
+
+.rua-horizontal-2 {
+    left: 440px;
+    top: 780px;
+
+    width: 980px;
+    height: 105px;
+}
+
+.rua-vertical-1 {
+    left: 580px;
+    top: 270px;
+
+    width: 105px;
+    height: 700px;
+}
+
+.rua-vertical-2 {
+    left: 1110px;
+    top: 270px;
+
+    width: 105px;
+    height: 700px;
+}
+
+
+/* =========================================================
+   MURALHAS
+========================================================= */
+
+.muralha {
+    position: absolute;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #777a72 0,
+            #777a72 42px,
+            #666961 42px,
+            #666961 45px
+        );
+
+    border: 5px solid #444740;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.3);
+
+    z-index: 50;
+}
+
+.muralha-norte {
+    left: 0;
+    top: 0;
+
+    width: 3200px;
+    height: 125px;
+}
+
+.muralha-sul {
+    left: 0;
+    bottom: 0;
+
+    width: 3200px;
+    height: 125px;
+}
+
+.muralha-oeste {
+    left: 0;
+    top: 0;
+
+    width: 125px;
+    height: 2200px;
+}
+
+.muralha-leste {
+    right: 0;
+    top: 0;
+
+    width: 125px;
+    height: 2200px;
+}
+
+
+/* =========================================================
+   TORRES
+========================================================= */
+
+.torre {
+    position: absolute;
+
+    width: 125px;
+    height: 155px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #85877f 0,
+            #85877f 38px,
+            #686b63 38px,
+            #686b63 42px
+        );
+
+    border: 6px solid #3d403a;
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.35);
+
+    z-index: 60;
+}
+
+.torre::before {
+    content: "";
+
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+    top: -22px;
+
+    height: 28px;
+
+    background: #494c46;
+
+    border: 3px solid #343731;
+}
+
+.torre-norte-esquerda {
+    left: 260px;
+    top: -10px;
+}
+
+.torre-norte-direita {
+    right: 260px;
+    top: -10px;
+}
+
+.torre-sul-esquerda {
+    left: 260px;
+    bottom: -10px;
+}
+
+.torre-sul-direita {
+    right: 260px;
+    bottom: -10px;
+}
+
+.torre-oeste {
+    left: -10px;
+    top: 1000px;
+}
+
+.torre-leste {
+    right: -10px;
+    top: 1000px;
+}
+
+
+/* =========================================================
+   REGIÕES
+========================================================= */
+
+.regiao {
+    position: absolute;
+}
+
+.placa-regiao {
+    position: absolute;
+
+    padding: 7px 13px;
+
+    background: rgba(0,0,0,.48);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    color: rgba(255,255,255,.55);
+
+    font-family: monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DISTRITO CENTRAL
+========================================================= */
+
+.distrito-central {
+    left: 300px;
+    top: 220px;
+
+    width: 1200px;
+    height: 730px;
+}
+
+.distrito-central .placa-regiao {
+    left: 30px;
+    top: 25px;
+}
+
+
+/* =========================================================
+   PRAÇA
+========================================================= */
+
+.praca-central {
+    position: absolute;
+
+    left: 665px;
+    top: 315px;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: #73756d;
+
+    border: 10px solid #555850;
+
+    box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.08),
+        0 10px 25px rgba(0,0,0,.2);
+}
+
+.fonte {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 125px;
+    height: 125px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #747873;
+
+    border: 9px solid #484c46;
+
+    box-shadow:
+        inset 0 0 0 5px #8a8e86;
+}
+
+.agua-fonte {
+    position: absolute;
+
+    inset: 20px;
+
+    border-radius: 50%;
+
+    background: #374f50;
+
+    box-shadow:
+        inset 0 0 15px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   CASAS
+========================================================= */
+
+.predio {
+    position: absolute;
+
+    background: #81786d;
+
+    border: 5px solid #4b4741;
+
+    box-shadow:
+        0 8px 14px rgba(0,0,0,.18);
+}
+
+.predio::before {
+    content: "";
+
+    position: absolute;
+
+    left: -5px;
+    right: -5px;
+    top: -28px;
+
+    height: 30px;
+
+    background: #4c4641;
+
+    border: 4px solid #35332f;
+
+    transform: skewX(-15deg);
+}
+
+.casa {
+    width: 190px;
+    height: 140px;
+}
+
+.casa-1 {
+    left: 60px;
+    top: 115px;
+}
+
+.casa-2 {
+    left: 330px;
+    top: 115px;
+}
+
+.casa-3 {
+    left: 950px;
+    top: 120px;
+}
+
+.casa-4 {
+    left: 950px;
+    top: 660px;
+}
+
+.janela {
+    position: absolute;
+
+    width: 38px;
+    height: 42px;
+
+    left: 30px;
+    top: 45px;
+
+    background: #303d3b;
+
+    border: 4px solid #4a443d;
+}
+
+.porta {
+    position: absolute;
+
+    width: 35px;
+    height: 65px;
+
+    bottom: 0;
+    right: 25px;
+
+    background: #403831;
+
+    border: 3px solid #302b27;
+}
+
+.grande {
+    width: 240px;
+    height: 185px;
+
+    background: #71695f;
+}
+
+.grande-1 {
+    left: 25px;
+    top: 590px;
+}
+
+.grande-2 {
+    left: 1100px;
+    top: 350px;
+}
+
+.grande .janela-1,
+.grande .janela-2 {
+    position: absolute;
+
+    top: 50px;
+
+    width: 45px;
+    height: 50px;
+
+    background: #33403e;
+
+    border: 4px solid #4d4841;
+}
+
+.grande .janela-1 {
+    left: 35px;
+}
+
+.grande .janela-2 {
+    right: 35px;
+}
+
+
+/* =========================================================
+   CALÇADAS
+========================================================= */
+
+.calcada {
+    position: absolute;
+
+    background: #8b8a80;
+
+    border: 2px solid rgba(0,0,0,.15);
+}
+
+.calcada-1 {
+    left: 430px;
+    top: 420px;
+
+    width: 1000px;
+    height: 30px;
+}
+
+.calcada-2 {
+    left: 430px;
+    top: 750px;
+
+    width: 1000px;
+    height: 30px;
+}
+
+.calcada-3 {
+    left: 550px;
+    top: 270px;
+
+    width: 30px;
+    height: 690px;
+}
+
+.calcada-4 {
+    left: 1080px;
+    top: 270px;
+
+    width: 30px;
+    height: 690px;
+}
+/* =========================================================
+   DISTRITO ABANDONADO
+========================================================= */
+
+.distrito-abandonado {
+    left: 230px;
+    top: 1250px;
+
+    width: 1050px;
+    height: 700px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,.08) 1px,
+            transparent 2px
+        );
+
+    background-size: 35px 35px;
+}
+
+.distrito-abandonado .placa-regiao {
+    left: 30px;
+    top: 30px;
+}
+
+.ruina {
+    position: absolute;
+
+    background: #625d55;
+
+    border: 7px solid #3e3b36;
+
+    box-shadow:
+        0 8px 15px rgba(0,0,0,.25);
+}
+
+.ruina-1 {
+    left: 90px;
+    top: 130px;
+
+    width: 330px;
+    height: 240px;
+}
+
+.ruina-2 {
+    left: 550px;
+    top: 100px;
+
+    width: 300px;
+    height: 310px;
+}
+
+.ruina-3 {
+    left: 300px;
+    top: 470px;
+
+    width: 430px;
+    height: 140px;
+}
+
+.janela-quebrada {
+    position: relative;
+
+    display: inline-block;
+
+    width: 50px;
+    height: 65px;
+
+    margin: 45px 20px;
+
+    background: #242827;
+
+    border: 4px solid #45433e;
+}
+
+.entulho {
+    position: absolute;
+
+    width: 75px;
+    height: 55px;
+
+    background: #464640;
+
+    transform: rotate(12deg);
+
+    box-shadow:
+        12px 15px 0 #5b5951,
+        -10px 10px 0 #3d3c37;
+}
+
+.entulho-1 {
+    left: 40px;
+    top: 440px;
+}
+
+.entulho-2 {
+    left: 800px;
+    top: 470px;
+}
+
+.entulho-3 {
+    left: 870px;
+    top: 160px;
+}
+
+.rua-destruida {
+    position: absolute;
+
+    background: #4b4c47;
+
+    transform: rotate(-7deg);
+}
+
+.rua-destruida-1 {
+    left: 0;
+    top: 390px;
+
+    width: 1100px;
+    height: 70px;
+}
+
+.rua-destruida-2 {
+    left: 430px;
+    top: 0;
+
+    width: 65px;
+    height: 700px;
+}
+
+
+/* =========================================================
+   ZONA RITUALÍSTICA
+========================================================= */
+
+.zona-templo {
+    left: 2050px;
+    top: 250px;
+
+    width: 750px;
+    height: 620px;
+}
+
+.zona-templo .placa-regiao {
+    left: 20px;
+    top: 20px;
+}
+
+.templo {
+    position: absolute;
+
+    left: 170px;
+    top: 130px;
+
+    width: 420px;
+    height: 370px;
+}
+
+.templo-telhado {
+    position: absolute;
+
+    left: -35px;
+    top: 0;
+
+    width: 490px;
+    height: 115px;
+
+    background: #373b37;
+
+    border: 8px solid #242724;
+
+    clip-path: polygon(
+        8% 100%,
+        50% 0,
+        92% 100%
+    );
+}
+
+.templo-corpo {
+    position: absolute;
+
+    left: 35px;
+    top: 95px;
+
+    width: 350px;
+    height: 260px;
+
+    background: #76776d;
+
+    border: 8px solid #42453f;
+}
+
+.coluna {
+    position: absolute;
+
+    top: 15px;
+
+    width: 45px;
+    height: 220px;
+
+    background: #9a998e;
+
+    border: 4px solid #55574f;
+}
+
+.coluna-1 {
+    left: 35px;
+}
+
+.coluna-2 {
+    right: 35px;
+}
+
+.porta-templo {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 80px;
+    height: 145px;
+
+    transform: translateX(-50%);
+
+    background: #272a26;
+
+    border: 6px solid #4d4e47;
+}
+
+.simbolo-ritual {
+    position: absolute;
+
+    color: rgba(255,255,255,.28);
+
+    font-size: 55px;
+}
+
+.simbolo-1 {
+    left: 60px;
+    top: 180px;
+}
+
+.simbolo-2 {
+    right: 70px;
+    top: 350px;
+}
+
+.simbolo-3 {
+    left: 300px;
+    bottom: 10px;
+}
+
+
+/* =========================================================
+   FLORESTA
+========================================================= */
+
+.floresta {
+    left: 2050px;
+    top: 1050px;
+
+    width: 950px;
+    height: 850px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #293b29 0%,
+            #203020 70%,
+            #182518 100%
+        );
+}
+
+.floresta .placa-regiao {
+    left: 30px;
+    top: 30px;
+}
+
+.arvore {
+    position: absolute;
+
+    width: 95px;
+    height: 115px;
+
+    background: #263d27;
+
+    border-radius: 50%;
+
+    box-shadow:
+        inset 15px -10px 0 rgba(0,0,0,.12),
+        10px 8px 0 #4a3e2f;
+
+    z-index: 5;
+}
+
+.arvore::after {
+    content: "";
+
+    position: absolute;
+
+    left: 38px;
+    top: 85px;
+
+    width: 20px;
+    height: 65px;
+
+    background: #514536;
+
+    z-index: -1;
+}
+
+.arvore-1 {
+    left: 100px;
+    top: 120px;
+}
+
+.arvore-2 {
+    left: 300px;
+    top: 80px;
+}
+
+.arvore-3 {
+    left: 500px;
+    top: 160px;
+}
+
+.arvore-4 {
+    left: 720px;
+    top: 100px;
+}
+
+.arvore-5 {
+    left: 150px;
+    top: 380px;
+}
+
+.arvore-6 {
+    left: 420px;
+    top: 350px;
+}
+
+.arvore-7 {
+    left: 700px;
+    top: 400px;
+}
+
+.arvore-8 {
+    left: 850px;
+    top: 230px;
+}
+
+.arvore-9 {
+    left: 70px;
+    top: 600px;
+}
+
+.arvore-10 {
+    left: 320px;
+    top: 590px;
+}
+
+.arvore-11 {
+    left: 600px;
+    top: 650px;
+}
+
+.arvore-12 {
+    left: 820px;
+    top: 570px;
+}
+
+
+/* =========================================================
+   ZONA DE RUPTURA
+========================================================= */
+
+.zona-morta {
+    left: 1300px;
+    top: 1320px;
+
+    width: 650px;
+    height: 620px;
+
+    background:
+        radial-gradient(
+            circle,
+            #242726 0,
+            #1c1e1d 65%,
+            #151716 100%
+        );
+
+    border: 4px solid #111;
+}
+
+.zona-morta .placa-regiao {
+    left: 25px;
+    top: 25px;
+
+    color: #888;
+}
+
+.rachadura {
+    position: absolute;
+
+    height: 9px;
+
+    background: #080909;
+
+    transform: rotate(-20deg);
+
+    box-shadow:
+        0 0 8px rgba(0,0,0,.8);
+}
+
+.rachadura-1 {
+    left: 80px;
+    top: 180px;
+
+    width: 450px;
+}
+
+.rachadura-2 {
+    left: 200px;
+    top: 350px;
+
+    width: 350px;
+
+    transform: rotate(30deg);
+}
+
+.rachadura-3 {
+    left: 50px;
+    top: 470px;
+
+    width: 300px;
+
+    transform: rotate(-10deg);
+}
+
+.rachadura-4 {
+    left: 430px;
+    top: 130px;
+
+    width: 180px;
+
+    transform: rotate(55deg);
+}
+
+.pedra {
+    position: absolute;
+
+    width: 70px;
+    height: 55px;
+
+    background: #4b4d4a;
+
+    clip-path: polygon(
+        15% 80%,
+        30% 15%,
+        75% 5%,
+        100% 60%,
+        70% 100%,
+        25% 95%
+    );
+}
+
+.pedra-1 {
+    left: 80px;
+    top: 300px;
+}
+
+.pedra-2 {
+    left: 480px;
+    top: 450px;
+}
+
+.pedra-3 {
+    left: 550px;
+    top: 250px;
+}
+
+
+/* =========================================================
+   PERSONAGEM
+========================================================= */
+
+#personagem-jogador {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 0;
+    height: 0;
+
+    z-index: 100;
+}
+
+#eloy {
+    position: absolute;
+
+    width: 80px;
+    height: 100px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+#eloy img {
+    display: block;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    width: auto;
+    height: auto;
+
+    image-rendering: pixelated;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 5px 3px rgba(0,0,0,.35)
+        );
+   }
+/* =========================================================
+   INTERFACE SUPERIOR
+========================================================= */
+
+#interface-superior {
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+    right: 15px;
+
+    z-index: 1000;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    pointer-events: none;
+}
+
+#relogio {
+    min-width: 110px;
+
+    padding: 8px 13px;
+
+    background: rgba(5,7,5,.82);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.25);
+
+    text-align: center;
+
+    backdrop-filter: blur(5px);
+}
+
+#hora {
+    font-family: monospace;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+}
+
+#periodo {
+    margin-top: 3px;
+
+    color: #bbb;
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+#nome-local {
+    margin-top: 3px;
+
+    padding: 8px 13px;
+
+    color: rgba(255,255,255,.6);
+
+    background: rgba(0,0,0,.4);
+
+    border-left: 2px solid rgba(255,255,255,.3);
+
+    font-family: monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   ANALÓGICO
+========================================================= */
+
+#controle-analogico {
+    position: fixed;
+
+    left: 25px;
+    bottom: 25px;
+
+    width: 150px;
+    height: 150px;
+
+    z-index: 1500;
+}
+
+#analogo {
+    position: relative;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08),
+            rgba(0,0,0,.35)
+        );
+
+    border: 2px solid rgba(255,255,255,.16);
+
+    box-shadow:
+        inset 0 0 20px rgba(0,0,0,.3),
+        0 5px 20px rgba(0,0,0,.2);
+
+    touch-action: none;
+}
+
+#analogo-centro {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 65px;
+    height: 65px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(255,255,255,.2),
+            rgba(255,255,255,.05)
+        );
+
+    border: 2px solid rgba(255,255,255,.22);
+
+    box-shadow:
+        0 5px 10px rgba(0,0,0,.35);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   AVISO
+========================================================= */
+
+#aviso-controle {
+    position: fixed;
+
+    left: 42px;
+    bottom: 10px;
+
+    z-index: 1501;
+
+    color: rgba(255,255,255,.3);
+
+    font-family: monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   NOITE
+========================================================= */
+
+body.noite #mundo {
+    filter:
+        brightness(.48)
+        saturate(.75);
+}
+
+body.noite #interface-superior {
+    filter: brightness(.9);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE — CELULAR
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .inicio h1 {
         font-size: 34px;
     }
 
-    .inicio-conteudo p {
-        font-size: 14px;
-        margin-bottom: 35px;
+    .inicio p {
+        font-size: 13px;
     }
 
-    #btn-comecar {
+    .botao-principal {
         padding: 14px 35px;
+
+        font-size: 13px;
     }
 
-    .selecao-conteudo h2 {
-        font-size: 22px;
-        letter-spacing: 2px;
-        margin-bottom: 22px;
-    }
 
-    .personagens {
-        grid-template-columns: repeat(2, 1fr);
+    .lista-personagens {
+        grid-template-columns: 1fr 1fr;
 
-        gap: 7px;
-
-        max-height: 70vh;
-        overflow-y: auto;
+        gap: 6px;
     }
 
     .personagem {
-        min-height: 48px;
-        font-size: 15px;
+        min-height: 54px;
+
+        padding: 0 10px;
     }
 
-    #controle {
-        left: 18px;
-        bottom: 18px;
-
-        width: 125px;
-        height: 125px;
+    .personagem .numero {
+        width: 25px;
     }
 
-    #analogo {
-        width: 125px;
-        height: 125px;
+    .personagem .nome {
+        font-size: 14px;
     }
 
-    #analogo-centro {
-        width: 55px;
-        height: 55px;
+    .personagem .status {
+        display: none;
     }
 
-    #interface-jogo {
-        top: 10px;
-        right: 10px;
+
+    #interface-superior {
+        top: 8px;
+        left: 8px;
+        right: 8px;
     }
 
     #relogio {
         min-width: 90px;
-        padding: 7px 10px;
+
+        padding: 6px 9px;
     }
 
     #hora {
         font-size: 17px;
     }
-  }
+
+    #periodo {
+        font-size: 9px;
+    }
+
+    #nome-local {
+        max-width: 160px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+
+        font-size: 8px;
+    }
+
+
+    #controle-analogico {
+        left: 18px;
+        bottom: 20px;
+
+        width: 130px;
+        height: 130px;
+    }
+
+    #analogo {
+        width: 130px;
+        height: 130px;
+    }
+
+    #analogo-centro {
+        width: 58px;
+        height: 58px;
+    }
+
+    #aviso-controle {
+        display: none;
+    }
+
+
+    #eloy {
+        width: 70px;
+        height: 90px;
+    }
+}
+
+
+/* =========================================================
+   CELULAR DEITADO
+========================================================= */
+
+@media (orientation: landscape) and (max-height: 550px) {
+
+    #controle-analogico {
+        left: 18px;
+        bottom: 12px;
+
+        width: 115px;
+        height: 115px;
+    }
+
+    #analogo {
+        width: 115px;
+        height: 115px;
+    }
+
+    #analogo-centro {
+        width: 52px;
+        height: 52px;
+    }
+
+    #interface-superior {
+        top: 7px;
+    }
+
+    #relogio {
+        padding: 5px 9px;
+    }
+
+    #hora {
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .lista-personagens {
+        grid-template-columns: 1fr;
+    }
+
+    .personagem {
+        min-height: 48px;
+    }
+}
