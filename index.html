@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <title>Life is dangerous, but use it more.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         TELA INICIAL
+    ========================== -->
+    <main id="tela-inicial" class="tela ativa">
+
+        <div class="inicio-conteudo">
+
+            <h1>
+                Life is dangerous,<br>
+                but use it more.
+            </h1>
+
+            <p>
+                Algumas escolhas não podem ser desfeitas.
+            </p>
+
+            <button id="btn-comecar">
+                COMEÇAR
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         SELEÇÃO DE PERSONAGEM
+    ========================== -->
+    <main id="tela-personagens" class="tela">
+
+        <div class="selecao-conteudo">
+
+            <h2>ESCOLHA SEU PERSONAGEM</h2>
+
+            <div class="personagens">
+
+                <button class="personagem selecionavel" data-personagem="Eloy">
+                    Eloy
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Mason">
+                    Mason
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Hades">
+                    Hades
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Selin">
+                    Selin
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Kimi">
+                    Kimi
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Persephone">
+                    Persephone
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Lizzie">
+                    Lizzie
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Camilla">
+                    Camilla
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Khyara">
+                    Khyara
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Aaron">
+                    Aaron
+                </button>
+
+                <button class="personagem indisponivel" data-personagem="Jaden">
+                    Jaden
+                </button>
+
+            </div>
+
+            <p id="mensagem-personagem"></p>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         MAPA
+    ========================== -->
+    <main id="tela-jogo" class="tela">
+
+        <!-- Interface superior -->
+        <div id="interface-jogo">
+
+            <div id="relogio">
+                <span id="hora">08:00</span>
+                <span id="periodo">☀️ DIA</span>
+            </div>
+
+        </div>
+
+
+        <!-- Mundo -->
+        <div id="mundo">
+
+            <!-- Eloy será colocado aqui pelo JavaScript -->
+            <img
+                id="eloy"
+                src="eloy.png"
+                alt="Eloy"
+            >
+
+        </div>
+
+
+        <!-- Analógico -->
+        <div id="controle">
+
+            <div id="analogo">
+                <div id="analogo-centro"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
